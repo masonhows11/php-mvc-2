@@ -18,9 +18,12 @@ trait HasAttributes
     }
 
 
-    protected function arrayToAttribute()
+    protected function arrayToAttribute(array $array,$object = null)
     {
 
+        if(!$object){
+            $className = 
+        }
     }
 
 
