@@ -36,6 +36,7 @@ trait HasQueryBuilder
 
     protected function setWhere($operator,$condition)
     {
+      // $operator -> AND OR
       $array = ['operator' => $operator,'condition' => $condition];
       array_push($this->where , $array);
 
@@ -71,7 +72,7 @@ trait HasQueryBuilder
     }
 
 
-    protected function addValue($attribute,$value)
+    protected function addValue($attribute,$value): void
     {
         //// this for prepared bind
         
@@ -104,4 +105,46 @@ trait HasQueryBuilder
         $this->resetLimit();
         $this->removeValues();
     }
+
+
+    protected function executeQuery(): void
+    {
+        $query = '';
+        $query .= $this->sql;
+
+        // where section
+        if(!empty($this->where)){
+
+            $whereString = '';
+            foreach ($this->where as $where)
+            {
+                // for separate multi where / condition
+                $whereString == '' ?
+                    $whereString .= $where['condition'] :
+                    $whereString .= ' ' .$where['operator'].' '.$where['condition'];
+            }
+            $query .= ' WHERE '.$whereString;
+        }
+
+        // order by section
+        if(!empty($this->orderBy)){
+            // for order on multi-column
+            $query .=' ORDER BY '.implode(', ',$this->orderBy);
+        }
+
+        // limit section
+        if(!empty($this->limit)){
+            // for order on multi-column
+            $query .=' LIMIT '.$this->limit['from'] .' '.$this->limit['number'].' ';
+        }
+
+        // end query string
+        $query .= ' ;';
+
+        echo $query.'<hr/>';
+
+    }
+
+
+
 }
