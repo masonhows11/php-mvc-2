@@ -22,7 +22,7 @@ trait HasAttributes
     {
 
         if(!$object){
-            $className = 
+            $className =
         }
     }
 

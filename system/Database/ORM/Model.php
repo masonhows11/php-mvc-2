@@ -14,21 +14,21 @@ abstract  class Model
 {
     use HasNethodCaller,HasQueryBuilder,HasRelation,HasSoftDelete,HasAttributes,HasCrud;
 
-    protected $table ;
-    protected $fillable = [];
+    protected string $table;
+    protected array $fillable = [];
 
-    protected  $hidden = [];
+    protected array  $hidden = [];
 
-    protected $casts = [];
+    protected array $casts = [];
 
-    protected  $primaryKey =  'id';
+    protected  string $primaryKey =  'id';
 
-    protected $createdAt = 'created_at';
-    protected $updatedAt = 'updated_at';
+    protected string $createdAt = 'created_at';
+    protected string $updatedAt = 'updated_at';
 
-    protected $deleteAt = null;
+    protected bool|null $deleteAt = null;
 
-    protected $collection = [];
+    protected array $collection = [];
 
 
 }
