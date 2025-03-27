@@ -11,19 +11,28 @@ trait HasAttributes
         // $object->$attribute example $user->name or $product->price
         $this->inCastAttributes($attribute) == true ?
 
-        $object->$attribute = $this->castDecodeValue($attribute, $value) :
+            $object->$attribute = $this->castDecodeValue($attribute, $value) :
 
-        $object->$attribute = $value;
+            $object->$attribute = $value;
 
     }
 
 
-    protected function arrayToAttribute(array $array,$object = null)
+    protected function arrayToAttribute(array $array, $object = null)
     {
 
-        if(!$object){
-            $className =
+        if (!$object) {
+            $className = get_called_class();
+            $object = new $className;
         }
+        foreach ($array as $attribute => $value) {
+
+            if ($this->inHiddenAttributes($attribute))
+                continue;
+            $this->registerAttribute($object,$attribute,$value);
+        }
+
+        return $object;
     }
 
 
@@ -37,7 +46,7 @@ trait HasAttributes
 
     }
 
-    private function inCastAttributes()
+    private function inCastAttributes(): void
     {
         return;
     }
