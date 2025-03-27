@@ -30,4 +30,20 @@ trait HasAttributes
     {
         
     }
+
+    private function castDecodeValue()
+    {
+        
+    }
+
+    private function castEncodeValue()
+    {
+        
+    }
+
+
+    protected function arrayToCastEncodeValue()
+    {
+        
+    }
 }
