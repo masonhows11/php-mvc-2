@@ -73,10 +73,16 @@ trait HasQueryBuilder
 
     protected function addValue($attribute,$value)
     {
+        //// this for prepared bind
+        
         // cat_id = 2 -> 3
         // attribute : cat_id = 2
         // value : 3
         // cat_id = 3
+
+        // values cat_id = 2
+        // bindValue 2
+
         $this->values[$attribute] = $value;
         array_push($this->bindValues,$value);
 
