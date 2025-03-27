@@ -73,8 +73,29 @@ trait HasQueryBuilder
 
     protected function addValue($attribute,$value)
     {
-        
+        // cat_id = 2 -> 3
+        // attribute : cat_id = 2
+        // value : 3
+        // cat_id = 3
+        $this->values[$attribute] = $value;
+        array_push($this->bindValues,$value);
+
     }
 
 
+    protected function removeValues(): void
+    {
+        $this->values  = [];
+        $this->bindValues = [];
+    }
+
+
+    protected function resetQuery(): void
+    {
+        $this->resetSql();
+        $this->resetWhere();
+        $this->resetOrderBy();
+        $this->resetLimit();
+        $this->removeValues();
+    }
 }
