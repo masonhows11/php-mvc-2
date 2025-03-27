@@ -36,19 +36,27 @@ trait HasAttributes
     }
 
 
-    protected function arrayToObjects()
+    protected function arrayToObjects(array $array)
     {
+        // creat nested array level
+        $collection = [];
 
+        foreach ($array as $value){
+            $object = $this->arrayToAttribute($value);
+            array_push($collection,$object);
+        }
+
+        $this->collection = $collection;
     }
 
-    private function inHiddenAttributes()
+    private function inHiddenAttributes($attribute): bool
     {
-
+        return in_array($attribute,$this->hidden);
     }
 
-    private function inCastAttributes(): void
+    private function inCastAttributes($attribute): bool
     {
-        return;
+        return in_array($attribute,array_keys($this->casts));
     }
 
     private function castDecodeValue()
