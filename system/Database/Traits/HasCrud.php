@@ -60,7 +60,9 @@ trait HasCrud
             // compare to array and return different items
             $differentVars = array_diff(array_keys($allVars),array_keys($defaultVars));
             foreach ($differentVars as $attribute){
-                
+
+                $this->inCastAttributes($attribute) ?
+                    $this->registerAttribute($this,$attribute,) : '';
             }
 
         }
