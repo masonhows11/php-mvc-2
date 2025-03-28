@@ -1,6 +1,8 @@
 <?php
 
 namespace System\Database\Traits;
+use System\Database\DBConnection\DBConnection;
+
 trait HasQueryBuilder
 {
 
@@ -107,7 +109,7 @@ trait HasQueryBuilder
     }
 
 
-    protected function executeQuery(): void
+    protected function executeQuery(): \PDOStatement|false
     {
         $query = '';
         $query .= $this->sql;
@@ -139,11 +141,33 @@ trait HasQueryBuilder
         }
 
         // end query string
+        // ready for execute
         $query .= ' ;';
 
         echo $query.'<hr/>';
 
+        // run query on database
+        $pdoInstance = DBConnection::getDbConnectionInstance();
+        // prepared state
+        $statement = $pdoInstance->prepare($query);
+        // execute
+        if(sizeof($this->bindValues) > sizeof($this->values))
+        {
+
+            sizeof($this->bindValues) > 0 ? $statement->execute($this->bindValues) :
+            $statement->execute();
+
+        }else{
+
+            sizeof($this->values) > 0 ? $statement->execute(array_values($this->values)) :
+                $statement->execute();
+        }
+
+        return $statement;
+
     }
+
+
 
 
 
