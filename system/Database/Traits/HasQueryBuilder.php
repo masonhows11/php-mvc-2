@@ -36,11 +36,12 @@ trait HasQueryBuilder
     }
 
 
-    protected function setWhere($operator,$condition)
+    protected function setWhere($operator,$condition): void
     {
       // $operator -> AND OR
       $array = ['operator' => $operator,'condition' => $condition];
-      array_push($this->where , $array);
+      // array_push($this->where , $array);
+      $this->where[] = $array;
 
     }
 
@@ -53,7 +54,8 @@ trait HasQueryBuilder
     protected function setOrderBy($name,$expression): void
     {
         // array_push($this->orderBy,$name.' '.$expression);
-        array_push($this->orderBy,$this->getAttributeName($name).' '.$expression);
+        // array_push($this->orderBy,$this->getAttributeName($name).' '.$expression);
+        $this->orderBy[] = $this->getAttributeName($name) . ' ' . $expression;
     }
 
     protected function resetOrderBy(): void
