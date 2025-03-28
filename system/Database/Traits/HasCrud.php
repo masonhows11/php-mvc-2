@@ -75,10 +75,29 @@ trait HasCrud
 
     }
 
-//    protected function findLastStoreRecord(false|string $newInsertId)
-//    {
-//
-//    }
+
+    protected function delete($id = null)
+    {
+
+        $object = $this; // refer to current model -> user / category / product
+        $this->resetQuery();
+        if($id){
+            $object = $this->find($id);
+            $this->resetQuery();
+        }
+        
+        $object->setSql("DELETE FROM ".$object->getTableName());
+        $object->setWhere("AND",$this->getAttributeName($this->primaryKey)." = ? ");
+        $object->addValue($object->primaryKey, $object->{$object->primaryKey});
+
+        return $object->executeQuery();
+
+    }
+
+    //    protected function findLastStoreRecord(false|string $newInsertId)
+    //    {
+    //
+    //    }
 
 
 }
