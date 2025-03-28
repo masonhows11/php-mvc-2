@@ -88,7 +88,8 @@ trait HasQueryBuilder
         // bindValue 2
 
         $this->values[$attribute] = $value;
-        array_push($this->bindValues,$value);
+        $this->bindValues[] = $value;
+        // array_push($this->bindValues,$value);
 
     }
 
