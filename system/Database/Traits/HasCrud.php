@@ -62,7 +62,8 @@ trait HasCrud
             foreach ($differentVars as $attribute){
 
                 $this->inCastAttributes($attribute) ?
-                    $this->registerAttribute($this,$attribute,) : '';
+                    $this->registerAttribute($this,$attribute,$this->castEncodeValue($attribute,$object->$attribute)) :
+                    $this->registerAttribute($this,$attribute,$object->$attribute);
             }
 
         }
