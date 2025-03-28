@@ -27,7 +27,7 @@ trait HasCrud
     }
 
 
-    protected function save(): void
+    protected function save(): \System\Database\ORM\Model
     {
         $fillString = $this->fill();
         // how find out we use this method
@@ -67,6 +67,11 @@ trait HasCrud
             }
 
         }
+
+        $this->resetQuery();
+        $this->setAllowedMethods(['update','delete','find']);
+
+        return $this;
 
     }
 
