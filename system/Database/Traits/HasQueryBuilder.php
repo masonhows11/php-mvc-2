@@ -167,6 +167,47 @@ trait HasQueryBuilder
 
     }
 
+    public function getCount()
+    {
+        $query = '';
+        $query .= "SELECT COUNT(*) FROM $this->table";
+
+        // where section
+        if(!empty($this->where)){
+
+            $whereString = '';
+            foreach ($this->where as $where)
+            {
+                // for separate multi where / condition
+                $whereString == '' ?
+                    $whereString .= $where['condition'] :
+                    $whereString .= ' ' .$where['operator'].' '.$where['condition'];
+            }
+            $query .= ' WHERE '.$whereString;
+        }
+
+        // end query string
+        // ready for execute
+        $query .= ' ;';
+
+        // run query on database
+        $pdoInstance = DBConnection::getDbConnectionInstance();
+        // prepared state
+        $statement = $pdoInstance->prepare($query);
+        // execute
+        if(sizeof($this->bindValues) > sizeof($this->values))
+        {
+
+            sizeof($this->bindValues) > 0 ? $statement->execute($this->bindValues) :
+                $statement->execute();
+
+        }else{
+
+            sizeof($this->values) > 0 ? $statement->execute(array_values($this->values)) :
+                $statement->execute();
+        }
+        return $statement->fetchColumn();
+    }
 
 
 
