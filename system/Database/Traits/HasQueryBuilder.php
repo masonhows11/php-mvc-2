@@ -210,6 +210,18 @@ trait HasQueryBuilder
     }
 
 
+    protected function getTableName(): string
+    {
+        // `table name` or `column name` like `users` / `title`
+        return ' `'.$this->table.'`';
+    }
+
+    protected function getAttributeName($attribute): string
+    {
+        // users.name
+        return ' `'.$this->table.'`.`'.$attribute.'` ';
+    }
+
 
 
 }
