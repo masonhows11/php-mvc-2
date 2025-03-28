@@ -27,7 +27,7 @@ trait HasCrud
     }
 
 
-    protected function save()
+    protected function save(): void
     {
         $fillString = $this->fill();
         // how find out we use this method
@@ -46,9 +46,31 @@ trait HasCrud
             //  $this->{$this->primaryKey} 2
         }
         $this->executeQuery();
+        $this->resetQuery();
 
-        
+
+        if (!isset($this->{$this->primaryKey})){
+
+            $object = $this->findLastStoreRecord(DBConnection::newInsertId());
+            // get default properties define in class & store in $defaultVars
+            $defaultVars = get_class_vars(get_called_class());
+            // get all properties define in obj of model/class & store in $allVars
+            $allVars = get_object_vars($object);
+
+            // compare to array and return different items
+            $differentVars = array_diff(array_keys($allVars),array_keys($defaultVars));
+            foreach ($differentVars as $attribute){
+                
+            }
+
+        }
+
     }
+
+//    protected function findLastStoreRecord(false|string $newInsertId)
+//    {
+//
+//    }
 
 
 }
