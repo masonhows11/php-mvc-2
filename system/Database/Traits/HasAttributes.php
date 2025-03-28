@@ -4,12 +4,14 @@ namespace System\Database\Traits;
 
 trait HasAttributes
 {
-    private function registerAttribute($object, string $attribute, $value)
+    private function registerAttribute($object, string $attribute, $value): void
     {
 
         // like cast in laravel cast to get or cast to write
         // $object->$attribute example $user->name or $product->price
-        $this->inCastAttributes($attribute) == true ?
+        // $this->inCastAttributes($attribute) == true
+
+        $this->inCastAttributes($attribute) ?
 
             $object->$attribute = $this->castDecodeValue($attribute, $value) :
 
@@ -28,40 +30,47 @@ trait HasAttributes
         //  l_name => hasany,
         //  phone => 5551212,
         //  ]
-        
-        if (!$object) {
+
+        if (!$object)
+        {
             $className = get_called_class();
             $object = new $className;
         }
         foreach ($array as $attribute => $value) {
-
+                // $user->name = ali
+                // attribute : $user->name
+                // $value : ali
+                // check if attribute is hidden not show in array
             if ($this->inHiddenAttributes($attribute))
                 continue;
             $this->registerAttribute($object,$attribute,$value);
         }
-
         return $object;
     }
 
 
-    protected function arrayToObjects(array $array)
+    protected function arrayToObjects(array $array): void
     {
         // creat nested array level
+        // and final collection
         $collection = [];
 
         foreach ($array as $value){
             $object = $this->arrayToAttribute($value);
-            array_push($collection,$object);
+            $collection[] = $object;
+            // array_push($collection,$object);
         }
-
         $this->collection = $collection;
     }
 
+
+    // hidden attribute/column
     private function inHiddenAttributes($attribute): bool
     {
         return in_array($attribute,$this->hidden);
     }
 
+    // attribute/column need cast means convert
     private function inCastAttributes($attribute): bool
     {
         return in_array($attribute,array_keys($this->casts));
@@ -92,7 +101,7 @@ trait HasAttributes
     }
 
 
-    protected function arrayToCastEncodeValue($values)
+    protected function arrayToCastEncodeValue($values): array
     {
         $newArray = [];
         foreach ($values as $attribute => $value)
