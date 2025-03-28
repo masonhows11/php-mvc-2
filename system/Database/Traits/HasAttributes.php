@@ -21,6 +21,14 @@ trait HasAttributes
     protected function arrayToAttribute(array $array, $object = null)
     {
 
+        // creat first array from object in final result query as collection
+        // like 0 = [
+        //  name => ali001,
+        //  f_name => ali,
+        //  l_name => hasany,
+        //  phone => 5551212,
+        //  ]
+        
         if (!$object) {
             $className = get_called_class();
             $object = new $className;
