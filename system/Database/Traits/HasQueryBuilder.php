@@ -50,9 +50,10 @@ trait HasQueryBuilder
 
     }
 
-    protected function setOrderBy($name,$expression)
+    protected function setOrderBy($name,$expression): void
     {
-        array_push($this->orderBy,$name.' '.$expression);
+        // array_push($this->orderBy,$name.' '.$expression);
+        array_push($this->orderBy,$this->getAttributeName($name).' '.$expression);
     }
 
     protected function resetOrderBy(): void
@@ -170,7 +171,10 @@ trait HasQueryBuilder
     public function getCount()
     {
         $query = '';
-        $query .= "SELECT COUNT(*) FROM $this->table";
+        // $query .= "SELECT COUNT(*) FROM $this->table";
+
+        // syntax user.*
+        $query .= "SELECT COUNT(".$this->getTableName().".*) FROM ". $this->getTableName();
 
         // where section
         if(!empty($this->where)){
