@@ -148,6 +148,72 @@ trait HasCrud
             return $this;
     }
 
+    protected function whereOr($attr,$firstValue,$secondValue = null): static
+    {
+        if($secondValue === null)
+        {
+            $condition = $this->getAttributeName($attr).' = ?';
+            // `users.id` = ?
+            $this->addValue($attr,$firstValue);
+
+        }else{
+
+            $condition = $this->getAttributeName($attr).' '.$firstValue.' ?';
+            // `user.id` <> ?
+            $this->addValue($attr,$secondValue);
+        }
+
+        $operator = 'OR';
+        $this->setWhere($operator,$condition);
+        $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+        return $this;
+    }
+
+    protected function whereNull($attr): static
+    {
+        $condition =  $this->getAttributeName($attr).' IS NULL ';
+        $operator = 'AND';
+        $this->setWhere($operator,$condition);
+        $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+        return $this;
+    }
+
+    protected function whereNotNull($attr): static
+    {
+        $condition =  $this->getAttributeName($attr).' IS NOT NULL ';
+        $operator = 'AND';
+        $this->setWhere($operator,$condition);
+        $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+
+        // because method chaining we return result
+        // this method for use for other method
+        return $this;
+    }
+
+
+    protected function whereIn($attr,$values)
+    {
+        // country -> attr in usa,germany,france -> values
+        if(is_array($values)){
+            $valuesArray = [];
+            foreach ($valuesArray as $value){
+                $this->addValue($attr,$value);
+                $valuesArray[] = '?';
+                //  array_push($valuesArray,'?');
+            }
+            // all condition or all query is string
+            // and , you should make and string "select * from users"
+            $condition = $this->getAttributeName($attr).' IN ('.implode(' , ',$valuesArray).')';
+            $operator = 'AND';
+            $this->setWhere($operator,$condition);
+            $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+            // because method chaining we return result
+            // this method for use for other method
+            return $this;
+        }
+    }
+
+
     //    protected function findLastStoreRecord(false|string $newInsertId)
     //    {
     //
