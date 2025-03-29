@@ -213,6 +213,28 @@ trait HasCrud
         }
     }
 
+    protected function orderBy($attr,$expression): static
+    {
+        $this->setOrderBy($attr,$expression);
+        $this->setAllowedMethods(['limit','orderBy','get','paginate']);
+        // because method chaining we return result
+        // this method for use for other method
+        return $this;
+
+    }
+
+    protected function limit($from,$number): static
+    {
+        $this->setLimit($from,$number);
+        $this->setAllowedMethods(['limit','get','paginate']);
+        // because method chaining we return result
+        // this method for use for other method
+        return $this;
+
+    }
+    
+    
+
 
     //    protected function findLastStoreRecord(false|string $newInsertId)
     //    {
