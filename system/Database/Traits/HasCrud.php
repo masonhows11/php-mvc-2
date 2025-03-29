@@ -89,6 +89,21 @@ trait HasCrud
 
     }
 
+    protected function find($id)
+    {
+        $this->setSql("SELECT * FROM " . $this->getTableName());
+        $this->setWhere("AND", $this->getAttributeName($this->primaryKey) . " = ? ");
+        $this->addValue($this->primaryKey, $id);
+        $statement = $this->executeQuery();
+        $data = $statement->fetch();
+        $this->setAllowedMethods(['update', 'delete', 'find']);
+        if ($data)
+        {
+            return  $this->arrayToAttributes($data);
+        }
+        return [];
+    }
+
 
     protected function delete($id = null)
     {

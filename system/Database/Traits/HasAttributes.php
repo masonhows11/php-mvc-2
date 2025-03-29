@@ -20,7 +20,8 @@ trait HasAttributes
     }
 
 
-    protected function arrayToAttribute(array $array, $object = null)
+    // final result is object
+    protected function arrayToAttributes(array $array, $object = null)
     {
 
         // creat first array from object in final result query as collection
@@ -58,7 +59,7 @@ trait HasAttributes
         $collection = [];
 
         foreach ($array as $value){
-            $object = $this->arrayToAttribute($value);
+            $object = $this->arrayToAttributes($value);
             $collection[] = $object;
             // array_push($collection,$object);
         }
