@@ -6,9 +6,21 @@ use System\Database\DBConnection\DBConnection;
 
 trait HasCrud
 {
+    protected function create($values)
+    {
+        $values = $this->arrayToCastEncodeValue($values);
+        $this->arrayToAttributes($values,$this);
+         return $this->save();
+    }
+
+    protected function update($values)
+    {
+        $values = $this->arrayToCastEncodeValue($values);
+        $this->arrayToAttributes($values,$this);
+        return $this->save();
+    }
 
     // space in query string is very, very important
-
     //to config fillable[] property
     protected function fill(): string
     {
