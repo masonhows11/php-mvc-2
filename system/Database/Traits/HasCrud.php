@@ -83,7 +83,7 @@ trait HasCrud
         $data = $statement->fetchAll();
         if ($data) {
             $this->arrayToObjects($data);
-            return  $this->collection;
+            return $this->collection;
         }
         return [];
 
@@ -97,9 +97,8 @@ trait HasCrud
         $statement = $this->executeQuery();
         $data = $statement->fetch();
         $this->setAllowedMethods(['update', 'delete', 'find']);
-        if ($data)
-        {
-            return  $this->arrayToAttributes($data);
+        if ($data) {
+            return $this->arrayToAttributes($data);
         }
         return [];
     }
@@ -124,66 +123,64 @@ trait HasCrud
     }
 
 
-    protected function where($attr,$firstValue,$secondValue = null): static
+    protected function where($attr, $firstValue, $secondValue = null): static
     {
-            if($secondValue === null)
-            {
-                $condition = $this->getAttributeName($attr).' = ?';
-                // `users.id` = ?
-                $this->addValue($attr,$firstValue);
+        if ($secondValue === null) {
+            $condition = $this->getAttributeName($attr) . ' = ?';
+            // `users.id` = ?
+            $this->addValue($attr, $firstValue);
 
-            }else{
+        } else {
 
-                $condition = $this->getAttributeName($attr).' '.$firstValue.' ?';
-                // `user.id` <> ?
-                $this->addValue($attr,$secondValue);
-            }
+            $condition = $this->getAttributeName($attr) . ' ' . $firstValue . ' ?';
+            // `user.id` <> ?
+            $this->addValue($attr, $secondValue);
+        }
 
-            $operator = 'AND';
-            $this->setWhere($operator,$condition);
-            // this methods like laravel us method chaining
-            $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+        $operator = 'AND';
+        $this->setWhere($operator, $condition);
+        // this methods like laravel us method chaining
+        $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
 
-            // find out what is $this on return
-            return $this;
+        // find out what is $this on return
+        return $this;
     }
 
-    protected function whereOr($attr,$firstValue,$secondValue = null): static
+    protected function whereOr($attr, $firstValue, $secondValue = null): static
     {
-        if($secondValue === null)
-        {
-            $condition = $this->getAttributeName($attr).' = ?';
+        if ($secondValue === null) {
+            $condition = $this->getAttributeName($attr) . ' = ?';
             // `users.id` = ?
-            $this->addValue($attr,$firstValue);
+            $this->addValue($attr, $firstValue);
 
-        }else{
+        } else {
 
-            $condition = $this->getAttributeName($attr).' '.$firstValue.' ?';
+            $condition = $this->getAttributeName($attr) . ' ' . $firstValue . ' ?';
             // `user.id` <> ?
-            $this->addValue($attr,$secondValue);
+            $this->addValue($attr, $secondValue);
         }
 
         $operator = 'OR';
-        $this->setWhere($operator,$condition);
-        $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+        $this->setWhere($operator, $condition);
+        $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
         return $this;
     }
 
     protected function whereNull($attr): static
     {
-        $condition =  $this->getAttributeName($attr).' IS NULL ';
+        $condition = $this->getAttributeName($attr) . ' IS NULL ';
         $operator = 'AND';
-        $this->setWhere($operator,$condition);
-        $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+        $this->setWhere($operator, $condition);
+        $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
         return $this;
     }
 
     protected function whereNotNull($attr): static
     {
-        $condition =  $this->getAttributeName($attr).' IS NOT NULL ';
+        $condition = $this->getAttributeName($attr) . ' IS NOT NULL ';
         $operator = 'AND';
-        $this->setWhere($operator,$condition);
-        $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+        $this->setWhere($operator, $condition);
+        $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
 
         // because method chaining we return result
         // this method for use for other method
@@ -191,49 +188,77 @@ trait HasCrud
     }
 
 
-    protected function whereIn($attr,$values)
+    protected function whereIn($attr, $values)
     {
         // country -> attr in usa,germany,france -> values
-        if(is_array($values)){
+        if (is_array($values)) {
             $valuesArray = [];
-            foreach ($valuesArray as $value){
-                $this->addValue($attr,$value);
+            foreach ($valuesArray as $value) {
+                $this->addValue($attr, $value);
                 $valuesArray[] = '?';
                 //  array_push($valuesArray,'?');
             }
             // all condition or all query is string
             // and , you should make and string "select * from users"
-            $condition = $this->getAttributeName($attr).' IN ('.implode(' , ',$valuesArray).')';
+            $condition = $this->getAttributeName($attr) . ' IN (' . implode(' , ', $valuesArray) . ')';
             $operator = 'AND';
-            $this->setWhere($operator,$condition);
-            $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+            $this->setWhere($operator, $condition);
+            $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
             // because method chaining we return result
             // this method for use for other method
             return $this;
         }
     }
 
-    protected function orderBy($attr,$expression): static
+    protected function orderBy($attr, $expression): static
     {
-        $this->setOrderBy($attr,$expression);
-        $this->setAllowedMethods(['limit','orderBy','get','paginate']);
+        $this->setOrderBy($attr, $expression);
+        $this->setAllowedMethods(['limit', 'orderBy', 'get', 'paginate']);
         // because method chaining we return result
         // this method for use for other method
         return $this;
 
     }
 
-    protected function limit($from,$number): static
+    protected function limit($from, $number): static
     {
-        $this->setLimit($from,$number);
-        $this->setAllowedMethods(['limit','get','paginate']);
+        $this->setLimit($from, $number);
+        $this->setAllowedMethods(['limit', 'get', 'paginate']);
         // because method chaining we return result
         // this method for use for other method
         return $this;
+    }
+
+    protected function get($array = [])
+    {
+        // $array = []; determine specifics column
+        if ($this->sql == '') {
+
+            if (empty($array)) {
+                $fields = $this->getTableName() . '.*';
+            } else {
+                foreach ($array as $key => $value) {
+                    $array[$key] = $this->getAttributeName($value);
+                    // users.email
+                }
+                $fields = implode(' , ',$array);
+                // select email,first_name,age from users
+            }
+            $this->setSql("SELECT $fields FROM".$this->getTableName());
+        }
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data) {
+            $this->arrayToObjects($data);
+            return $this->collection;
+        }
+        return [];
 
     }
-    
-    
+
+
+
+
 
 
     //    protected function findLastStoreRecord(false|string $newInsertId)
