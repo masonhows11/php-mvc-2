@@ -233,7 +233,6 @@ trait HasCrud
     {
         // $array = []; determine specifics column
         if ($this->sql == '') {
-
             if (empty($array)) {
                 $fields = $this->getTableName() . '.*';
             } else {
@@ -253,6 +252,16 @@ trait HasCrud
             return $this->collection;
         }
         return [];
+    }
+
+
+    protected function paginate(int $perPage = null)
+    {
+        $totalRows = $this->getCount();
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $totalPages = ceil($totalPages / $perPage);
+        $currentPage = min($currentPage,$totalPages);
+        $currentPage = max($currentPage,$totalPages);
 
     }
 
