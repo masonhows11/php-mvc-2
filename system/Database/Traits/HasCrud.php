@@ -255,14 +255,28 @@ trait HasCrud
     }
 
 
-    protected function paginate(int $perPage = null)
+    protected function paginate(int $perPage = null): array
     {
         $totalRows = $this->getCount();
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $totalPages = ceil($totalPages / $perPage);
+        $totalPages = ceil($totalRows / $perPage);
         $currentPage = min($currentPage,$totalPages);
         $currentPage = max($currentPage,$totalPages);
+        $currentRow = ($currentPage - 1) * $perPage;
+        $this->limit($currentRow,$perPage);
 
+        if($this->sql == '')
+        {
+            $this->setSql("SELECT ".$this->getTableName().".* FROM ".$this->getTableName());
+        }
+
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data) {
+            $this->arrayToObjects($data);
+            return $this->collection;
+        }
+        return [];
     }
 
 
