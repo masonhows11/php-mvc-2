@@ -123,6 +123,31 @@ trait HasCrud
 
     }
 
+
+    protected function where($attr,$firstValue,$secondValue = null): static
+    {
+            if($secondValue === null)
+            {
+                $condition = $this->getAttributeName($attr).' = ?';
+                // `users.id` = ?
+                $this->addValue($attr,$firstValue);
+
+            }else{
+
+                $condition = $this->getAttributeName($attr).' '.$firstValue.' ?';
+                // `user.id` <> ?
+                $this->addValue($attr,$secondValue);
+            }
+
+            $operator = 'AND';
+            $this->setWhere($operator,$condition);
+            // this methods like laravel us method chaining
+            $this->setAllowedMethods(['get','where','whereOr','whereIn','whereNull','whereNotNull','limit','orderBy','get','paginate','find']);
+
+            // find out what is $this on return
+            return $this;
+    }
+
     //    protected function findLastStoreRecord(false|string $newInsertId)
     //    {
     //
