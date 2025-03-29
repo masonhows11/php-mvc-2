@@ -7,6 +7,7 @@ use System\Database\DBConnection\DBConnection;
 trait HasCrud
 {
 
+    // space in query string is very, very important
 
     //to config fillable[] property
     protected function fill(): string
@@ -49,7 +50,7 @@ trait HasCrud
         $this->resetQuery();
 
 
-        if (!isset($this->{$this->primaryKey})){
+        if (!isset($this->{$this->primaryKey})) {
 
             $object = $this->findLastStoreRecord(DBConnection::newInsertId());
             // get default properties define in class & store in $defaultVars
@@ -58,20 +59,33 @@ trait HasCrud
             $allVars = get_object_vars($object);
 
             // compare to array and return different items
-            $differentVars = array_diff(array_keys($allVars),array_keys($defaultVars));
-            foreach ($differentVars as $attribute){
+            $differentVars = array_diff(array_keys($allVars), array_keys($defaultVars));
+            foreach ($differentVars as $attribute) {
 
                 $this->inCastAttributes($attribute) ?
-                    $this->registerAttribute($this,$attribute,$this->castEncodeValue($attribute,$object->$attribute)) :
-                    $this->registerAttribute($this,$attribute,$object->$attribute);
+                    $this->registerAttribute($this, $attribute, $this->castEncodeValue($attribute, $object->$attribute)) :
+                    $this->registerAttribute($this, $attribute, $object->$attribute);
             }
 
         }
 
         $this->resetQuery();
-        $this->setAllowedMethods(['update','delete','find']);
+        $this->setAllowedMethods(['update', 'delete', 'find']);
 
         return $this;
+
+    }
+
+    protected function all(): array
+    {
+        $this->setSql("SELECT * FROM " . $this->getTableName());
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data) {
+            $this->arrayToObjects($data);
+            return  $this->collection;
+        }
+        return [];
 
     }
 
@@ -81,13 +95,13 @@ trait HasCrud
 
         $object = $this; // refer to current model -> user / category / product
         $this->resetQuery();
-        if($id){
+        if ($id) {
             $object = $this->find($id);
             $this->resetQuery();
         }
-        
-        $object->setSql("DELETE FROM ".$object->getTableName());
-        $object->setWhere("AND",$this->getAttributeName($this->primaryKey)." = ? ");
+
+        $object->setSql("DELETE FROM " . $object->getTableName());
+        $object->setWhere("AND", $this->getAttributeName($this->primaryKey) . " = ? ");
         $object->addValue($object->primaryKey, $object->{$object->primaryKey});
 
         return $object->executeQuery();
