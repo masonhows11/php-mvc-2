@@ -126,8 +126,10 @@ trait HasRelation
     {
         // sql = nested join
         // sql =
-        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$foreignKey}` = `b`.`{$otherKey}` ");
-        
+        $this->setSql("SELECT `c`.* FROM ( SELECT `b`.* FROM `{$table}` AS `a` JOIN `{$commonTable}` AS `b` on
+        `a`.`{$localKey}` = `b`.`{$middleForeignKey}`WHERE `a`.`{$localKey}` =? ) AS `relation` JOIN
+        ".$this->getTableName()."AS `c` ON `relation`.`{$middleRelation}` = `c`.`$foreignKey`");
+
         $this->addValue("{$table}_{$localKey}",$localKeyValue);
         $this->table = 'c';
         //        $statement = $this->executeQuery();
