@@ -6,14 +6,14 @@ use System\Database\DBConnection\DBConnection;
 
 trait HasCrud
 {
-    protected function create($values)
+    protected function createMethod($values): \System\Database\ORM\Model
     {
         $values = $this->arrayToCastEncodeValue($values);
         $this->arrayToAttributes($values,$this);
          return $this->save();
     }
 
-    protected function update($values)
+    protected function updateMethod($values): \System\Database\ORM\Model
     {
         $values = $this->arrayToCastEncodeValue($values);
         $this->arrayToAttributes($values,$this);
@@ -40,7 +40,7 @@ trait HasCrud
     }
 
 
-    protected function save(): \System\Database\ORM\Model
+    protected function saveMethod(): \System\Database\ORM\Model
     {
         $fillString = $this->fill();
         // how find out we use this method
@@ -88,7 +88,7 @@ trait HasCrud
 
     }
 
-    protected function all(): array
+    protected function allMethod(): array
     {
         $this->setSql("SELECT * FROM " . $this->getTableName());
         $statement = $this->executeQuery();
@@ -101,7 +101,7 @@ trait HasCrud
 
     }
 
-    protected function find($id)
+    protected function findMethod($id)
     {
         $this->setSql("SELECT * FROM " . $this->getTableName());
         $this->setWhere("AND", $this->getAttributeName($this->primaryKey) . " = ? ");
@@ -116,7 +116,7 @@ trait HasCrud
     }
 
 
-    protected function delete($id = null)
+    protected function deleteMethod($id = null)
     {
 
         $object = $this; // refer to current model -> user / category / product
@@ -135,7 +135,7 @@ trait HasCrud
     }
 
 
-    protected function where($attr, $firstValue, $secondValue = null): static
+    protected function whereMethod($attr, $firstValue, $secondValue = null): static
     {
         if ($secondValue === null) {
             $condition = $this->getAttributeName($attr) . ' = ?';
@@ -158,7 +158,7 @@ trait HasCrud
         return $this;
     }
 
-    protected function whereOr($attr, $firstValue, $secondValue = null): static
+    protected function whereOrMethod($attr, $firstValue, $secondValue = null): static
     {
         if ($secondValue === null) {
             $condition = $this->getAttributeName($attr) . ' = ?';
@@ -178,7 +178,7 @@ trait HasCrud
         return $this;
     }
 
-    protected function whereNull($attr): static
+    protected function whereNullMethod($attr): static
     {
         $condition = $this->getAttributeName($attr) . ' IS NULL ';
         $operator = 'AND';
@@ -187,7 +187,7 @@ trait HasCrud
         return $this;
     }
 
-    protected function whereNotNull($attr): static
+    protected function whereNotNullMethod($attr): static
     {
         $condition = $this->getAttributeName($attr) . ' IS NOT NULL ';
         $operator = 'AND';
@@ -200,7 +200,7 @@ trait HasCrud
     }
 
 
-    protected function whereIn($attr, $values)
+    protected function whereInMethod($attr, $values)
     {
         // country -> attr in usa,germany,france -> values
         if (is_array($values)) {
@@ -222,7 +222,7 @@ trait HasCrud
         }
     }
 
-    protected function orderBy($attr, $expression): static
+    protected function orderByMethod($attr, $expression): static
     {
         $this->setOrderBy($attr, $expression);
         $this->setAllowedMethods(['limit', 'orderBy', 'get', 'paginate']);
@@ -232,7 +232,7 @@ trait HasCrud
 
     }
 
-    protected function limit($from, $number): static
+    protected function limitMethod($from, $number): static
     {
         $this->setLimit($from, $number);
         $this->setAllowedMethods(['limit', 'get', 'paginate']);
@@ -241,7 +241,7 @@ trait HasCrud
         return $this;
     }
 
-    protected function get($array = [])
+    protected function getMethod($array = [])
     {
         // $array = []; determine specifics column
         if ($this->sql == '') {
@@ -267,7 +267,7 @@ trait HasCrud
     }
 
 
-    protected function paginate(int $perPage = null): array
+    protected function paginateMethod(int $perPage = null): array
     {
         $totalRows = $this->getCount();
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
