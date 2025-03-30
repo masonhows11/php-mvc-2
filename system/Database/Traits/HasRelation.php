@@ -109,19 +109,20 @@ trait HasRelation
     /// categories category_product products
     /// left id , name : right id , title
     /// pivot table id , cat_id , product_id
-    protected function manyTo($model, $foreignKey, $localKey)
+    protected function belongsToMany($model,$commonTable,$localKey,$middleforeignKey,$middleRelation,$foreignKey)
     {
 
         if ($this->{$this->primaryKey}) {
 
             $modelObject = new $model;
-            return $modelObject->getBelongsToRelation($this->table, $foreignKey, $localKey, $this->$foreignKey);
+            return $modelObject->getBelongsToManyRelation($this->table,$commonTable,$localKey, $this->$localKey,
+                                                                 $middleforeignKey,$middleRelation,$foreignKey);
         }
         return null;
     }
 
 
-    public function getBelongsToRelation($table, $foreignKey, $otherKey, $foreignKeyValue)
+    public function getBelongsToManyRelation($table,$commonTable,$localKey, $localKeyValue,$middleForeignKey,$middleRelation,$foreignKey)
     {
         $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$foreignKey}` = `b`.`{$otherKey}` ");
         $this->setWhere('AND', "`a`.`{$foreignKey}` = ? ");
