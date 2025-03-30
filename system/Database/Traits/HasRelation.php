@@ -109,14 +109,14 @@ trait HasRelation
     /// categories category_product products
     /// left id , name : right id , title
     /// pivot table id , cat_id , product_id
-    protected function belongsToMany($model,$commonTable,$localKey,$middleforeignKey,$middleRelation,$foreignKey)
+    protected function belongsToMany($model,$commonTable,$localKey,$middleForeignKey,$middleRelation,$foreignKey)
     {
 
         if ($this->{$this->primaryKey}) {
 
             $modelObject = new $model();
             return $modelObject->getBelongsToManyRelation($this->table,$commonTable,$localKey, $this->$localKey,
-                                                                 $middleforeignKey,$middleRelation,$foreignKey);
+                                                                 $middleForeignKey,$middleRelation,$foreignKey);
         }
         return null;
     }
