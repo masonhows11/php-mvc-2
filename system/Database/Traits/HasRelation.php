@@ -10,32 +10,96 @@ trait HasRelation
     // mann to many & reverse
 
 
-    protected function hasOne($model,$foreignKey,$localKey)
+    //// one to one
+    protected function hasOne($model, $foreignKey, $localKey)
     {
 
-        if($this->{$this->primaryKey}){
+        if ($this->{$this->primaryKey}) {
 
             $modelObject = new $model;
-            return $modelObject->getHasOneRelation($this->table,$foreignKey,$localKey,$this->$localKey);
+            return $modelObject->getHasOneRelation($this->table, $foreignKey, $localKey, $this->$localKey);
         }
         return null;
     }
 
 
-    public function getHasOneRelation($table,$foreignKey,$otherKey,$otherKeyValue)
+    public function getHasOneRelation($table, $foreignKey, $otherKey, $otherKeyValue)
     {
         // sql = 'select phones.* from users join  phones on users.id = phones.user_id';
         // a left table like users
         // b right table like phone
         // user hasOne phone
 
-        $this->setSql( "SELECT `b`.* FROM `{$table}` AS `a` JOIN ".$this->getTableName()." AS `b` ON `a`.`{$otherKey}` = `b`.`{$foreignKey}` ");
-        $this->setWhere('AND',"`a`.`{$otherKey}` = ? ");
+        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$otherKey}` = `b`.`{$foreignKey}` ");
+        $this->setWhere('AND', "`a`.`{$otherKey}` = ? ");
         $this->table = 'b';
-        $this->addValue($otherKey,$otherKeyValue);
+        $this->addValue($otherKey, $otherKeyValue);
         $statement = $this->executeQuery();
         $data = $statement->fetch();
-        if($data){
+        if ($data) {
+            return $this->arrayToAttributes($data);
+        }
+        return null;
+
+    }
+
+
+    //// one to many
+    protected function hasMany($model, $foreignKey, $otherKey)
+    {
+
+        if ($this->{$this->primaryKey}) {
+
+            $modelObject = new $model;
+            return $modelObject->getHasManyRelation($this->table, $foreignKey, $otherKey, $this->$otherKey);
+        }
+        return null;
+    }
+
+
+    public function getHasManyRelation($table, $foreignKey, $otherKey, $otherKeyValue): static
+    {
+        // sql = 'select posts.* from categories join posts on categories.id = posts.user_id';
+        // a left table like categories
+        // b right table like posts
+        // category hasMany posts
+
+        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$otherKey}` = `b`.`{$foreignKey}` ");
+        $this->setWhere('AND', "`a`.`{$otherKey}` = ? ");
+        $this->table = 'b';
+        $this->addValue($otherKey, $otherKeyValue);
+        return $this;
+        //        $statement = $this->executeQuery();
+        //        $data = $statement->fetchAll();
+        //        if($data){
+        //            return $this->arrayToAttributes($data);
+        //        }
+        //        return null;
+
+    }
+
+    //// one to many reverse / belongsTo
+    protected function belongsTo($model, $foreignKey, $localKey)
+    {
+
+        if ($this->{$this->primaryKey}) {
+
+            $modelObject = new $model;
+            return $modelObject->getBelongsToRelation($this->table, $foreignKey, $localKey, $this->$foreignKey);
+        }
+        return null;
+    }
+
+
+    public function getBelongsToRelation($table, $foreignKey, $otherKey, $foreignKeyValue)
+    {
+        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$foreignKey}` = `b`.`{$otherKey}` ");
+        $this->setWhere('AND', "`a`.`{$foreignKey}` = ? ");
+        $this->table = 'b';
+        $this->addValue($foreignKey, $foreignKeyValue);
+        $statement = $this->executeQuery();
+        $data = $statement->fetch();
+        if ($data) {
             return $this->arrayToAttributes($data);
         }
         return null;
