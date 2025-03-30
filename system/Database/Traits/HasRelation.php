@@ -16,7 +16,7 @@ trait HasRelation
 
         if ($this->{$this->primaryKey}) {
 
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getHasOneRelation($this->table, $foreignKey, $localKey, $this->$localKey);
         }
         return null;
@@ -50,7 +50,7 @@ trait HasRelation
 
         if ($this->{$this->primaryKey}) {
 
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getHasManyRelation($this->table, $foreignKey, $otherKey, $this->$otherKey);
         }
         return null;
@@ -84,7 +84,7 @@ trait HasRelation
 
         if ($this->{$this->primaryKey}) {
 
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getBelongsToRelation($this->table, $foreignKey, $localKey, $this->$foreignKey);
         }
         return null;
@@ -114,7 +114,7 @@ trait HasRelation
 
         if ($this->{$this->primaryKey}) {
 
-            $modelObject = new $model;
+            $modelObject = new $model();
             return $modelObject->getBelongsToManyRelation($this->table,$commonTable,$localKey, $this->$localKey,
                                                                  $middleforeignKey,$middleRelation,$foreignKey);
         }
@@ -124,10 +124,11 @@ trait HasRelation
 
     public function getBelongsToManyRelation($table,$commonTable,$localKey, $localKeyValue,$middleForeignKey,$middleRelation,$foreignKey)
     {
+        // sql =
         $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$foreignKey}` = `b`.`{$otherKey}` ");
         $this->setWhere('AND', "`a`.`{$foreignKey}` = ? ");
         $this->table = 'b';
-        $this->addValue($foreignKey, $foreignKeyValue);
+        $this->addValue("{$table}_{$localKey}",$localKeyValue);
         $statement = $this->executeQuery();
         $data = $statement->fetch();
         if ($data) {
