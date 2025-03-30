@@ -124,17 +124,18 @@ trait HasRelation
 
     public function getBelongsToManyRelation($table,$commonTable,$localKey, $localKeyValue,$middleForeignKey,$middleRelation,$foreignKey)
     {
+        // sql = nested join
         // sql =
         $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$foreignKey}` = `b`.`{$otherKey}` ");
-        $this->setWhere('AND', "`a`.`{$foreignKey}` = ? ");
-        $this->table = 'b';
+        
         $this->addValue("{$table}_{$localKey}",$localKeyValue);
-        $statement = $this->executeQuery();
-        $data = $statement->fetch();
-        if ($data) {
-            return $this->arrayToAttributes($data);
-        }
-        return null;
+        $this->table = 'c';
+        //        $statement = $this->executeQuery();
+        //        $data = $statement->fetch();
+        //        if ($data) {
+        //            return $this->arrayToAttributes($data);
+        //        }
+        //        return null;
     }
 
 
