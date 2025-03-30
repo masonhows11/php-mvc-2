@@ -105,5 +105,35 @@ trait HasRelation
         return null;
     }
 
+    //// many to many
+    /// categories category_product products
+    /// left id , name : right id , title
+    /// pivot table id , cat_id , product_id
+    protected function manyTo($model, $foreignKey, $localKey)
+    {
+
+        if ($this->{$this->primaryKey}) {
+
+            $modelObject = new $model;
+            return $modelObject->getBelongsToRelation($this->table, $foreignKey, $localKey, $this->$foreignKey);
+        }
+        return null;
+    }
+
+
+    public function getBelongsToRelation($table, $foreignKey, $otherKey, $foreignKeyValue)
+    {
+        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$foreignKey}` = `b`.`{$otherKey}` ");
+        $this->setWhere('AND', "`a`.`{$foreignKey}` = ? ");
+        $this->table = 'b';
+        $this->addValue($foreignKey, $foreignKeyValue);
+        $statement = $this->executeQuery();
+        $data = $statement->fetch();
+        if ($data) {
+            return $this->arrayToAttributes($data);
+        }
+        return null;
+    }
+
 
 }
