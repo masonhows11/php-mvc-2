@@ -122,7 +122,7 @@ trait HasCrud
         $object = $this; // refer to current model -> user / category / product
         $this->resetQuery();
         if ($id) {
-            $object = $this->find($id);
+            $object = $this->findMethod($id);
             $this->resetQuery();
         }
 
