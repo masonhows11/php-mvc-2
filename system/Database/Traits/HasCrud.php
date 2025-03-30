@@ -90,6 +90,7 @@ trait HasCrud
 
     protected function allMethod(): array
     {
+
         $this->setSql("SELECT * FROM " . $this->getTableName());
         $statement = $this->executeQuery();
         $data = $statement->fetchAll();
@@ -112,7 +113,7 @@ trait HasCrud
         if ($data) {
             return $this->arrayToAttributes($data);
         }
-        return [];
+        return null;
     }
 
 
