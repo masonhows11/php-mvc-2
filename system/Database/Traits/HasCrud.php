@@ -276,7 +276,7 @@ trait HasCrud
         $currentPage = min($currentPage,$totalPages);
         $currentPage = max($currentPage,1);
         $currentRow = ($currentPage - 1) * $perPage;
-        $this->limit($currentRow,$perPage);
+        $this->limitMethod($currentRow,$perPage);
 
         if($this->sql == '')
         {

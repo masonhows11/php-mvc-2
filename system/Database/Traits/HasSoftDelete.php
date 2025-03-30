@@ -53,7 +53,7 @@ trait HasSoftDelete
         $this->setWhere("AND",$this->getAttributeName($this->primaryKey)." = ? ");
         $this->addValue($this->primaryKey, $id);
 
-        $this->setWhere("AND",$this->getAttributeName($this->primaryKey)." IS NULL ");
+        $this->setWhere("AND",$this->getAttributeName($this->deleteAt)." IS NULL ");
 
         $statement = $this->executeQuery();
         $data = $statement->fetch();
@@ -63,4 +63,61 @@ trait HasSoftDelete
         }
         return null;
     }
+
+    protected function getMethod($array = [])
+    {
+        // $array = []; determine specifics column
+        if ($this->sql == '')
+        {
+            if (empty($array)) {
+                $fields = $this->getTableName() . '.*';
+            } else {
+                foreach ($array as $key => $value) {
+                    $array[$key] = $this->getAttributeName($value);
+                    // users.email
+                }
+                $fields = implode(' , ',$array);
+                // select email,first_name,age from users
+            }
+            $this->setSql("SELECT $fields FROM".$this->getTableName());
+        }
+        $this->setWhere("AND",$this->getAttributeName($this->deleteAt)." IS NULL ");
+
+
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data) {
+            $this->arrayToObjects($data);
+            return $this->collection;
+        }
+        return [];
+    }
+
+    protected function paginateMethod(int $perPage = null): array
+    {
+        $this->setWhere("AND",$this->getAttributeName($this->deleteAt)." IS NULL ");
+        //
+        $totalRows = $this->getCount();
+        //
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $totalPages = ceil($totalRows / $perPage);
+        $currentPage = min($currentPage,$totalPages);
+        $currentPage = max($currentPage,1);
+        $currentRow = ($currentPage - 1) * $perPage;
+        $this->limitMethod($currentRow,$perPage);
+
+        if($this->sql == '')
+        {
+            $this->setSql("SELECT ".$this->getTableName().".* FROM ".$this->getTableName());
+        }
+
+        $statement = $this->executeQuery();
+        $data = $statement->fetchAll();
+        if ($data) {
+            $this->arrayToObjects($data);
+            return $this->collection;
+        }
+        return [];
+    }
+
 }
