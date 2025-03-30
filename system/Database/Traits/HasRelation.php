@@ -132,6 +132,7 @@ trait HasRelation
 
         $this->addValue("{$table}_{$localKey}",$localKeyValue);
         $this->table = 'c';
+        return $this;
         //        $statement = $this->executeQuery();
         //        $data = $statement->fetch();
         //        if ($data) {
