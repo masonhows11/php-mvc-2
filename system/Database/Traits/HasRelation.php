@@ -103,7 +103,6 @@ trait HasRelation
             return $this->arrayToAttributes($data);
         }
         return null;
-
     }
 
 
