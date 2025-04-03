@@ -11,4 +11,10 @@ class User extends Model
     protected array $fillable = ['name','email','first_name','last_name'];
 
     protected array $casts = [];
+
+
+    public function roles()
+    {
+        return $this->belongsToMany('App\Models\Role','user_role','id','user_id','role_id','id');
+    }
 }
