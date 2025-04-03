@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Category
+use System\Database\ORM\Model;
+
+class Category extends Model
 {
 
 }

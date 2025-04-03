@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Role
+use System\Database\ORM\Model;
+
+class Role extends Model
 {
 
 }

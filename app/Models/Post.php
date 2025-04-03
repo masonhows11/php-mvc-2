@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
-class Post
+use System\Database\ORM\Model;
+
+class Post extends Model
 {
 
 }
