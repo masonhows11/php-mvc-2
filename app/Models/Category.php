@@ -13,4 +13,12 @@ class Category extends Model
 
     protected array $casts = [];
 
+
+
+    public function posts()
+    {
+        return
+            $this->hasMany('app\Models\Post','cat_id', 'id');
+    }
+
 }

@@ -14,4 +14,8 @@ class Post extends Model
     protected array $casts = [];
 
 
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category','cat_id','id');
+    }
 }
