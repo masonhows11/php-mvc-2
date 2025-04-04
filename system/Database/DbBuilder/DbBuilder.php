@@ -18,11 +18,17 @@ class DbBuilder
     }
 
 
-    private function createTables()
+    private function createTables(): void
     {
         $migrations = $this->getMigrations();
 
-        
+        $pdoInstance = DBConnection::getDbConnectionInstance();
+
+        foreach ($migrations as $migration){
+
+            $statement = $pdoInstance->prepare($migration);
+            $statement->execute();
+        }
 
     }
 
