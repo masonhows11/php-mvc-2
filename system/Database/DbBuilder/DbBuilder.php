@@ -19,22 +19,23 @@ class DbBuilder
     }
 
 
-
     private function getMigrations(): array
     {
 
+        $oldMigrationArray =  $this->getFromOldMigration();
+        $migrationDir = BASE_DIR.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
         return [];
     }
 
     private function getFromOldMigration(): array
     {
-        $data = file_get_contents(__DIR__.'/oldTables.db');
+        $data = file_get_contents(__DIR__ . '/oldTables.db');
         return empty($data) ? [] : unserialize($data);
     }
 
-    private function putToOldMigration(): array
+    private function putToOldMigration($value): void
     {
-        return [];
+        file_put_contents(__DIR__ . '/oldTables.db', serialize($value));
     }
 
     private function createTables(): bool
@@ -57,8 +58,6 @@ class DbBuilder
 
 
     }
-
-
 
 
 }
