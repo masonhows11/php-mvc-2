@@ -12,7 +12,7 @@ use System\Database\Traits\HasMethodCaller;
 
 abstract  class Model
 {
-    use HasMethodCaller,HasQueryBuilder,HasRelation,HasSoftDelete,HasAttributes,HasCrud;
+    use HasMethodCaller,HasQueryBuilder,HasRelation,HasAttributes,HasCrud;
 
     protected string $table;
     protected array $fillable = [];

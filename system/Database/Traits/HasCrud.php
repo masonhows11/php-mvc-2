@@ -242,7 +242,7 @@ trait HasCrud
         return $this;
     }
 
-    protected function getMethod($array = [])
+    protected function getMethod($array = []): array
     {
         // $array = []; determine specifics column
         if ($this->sql == '') {

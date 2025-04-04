@@ -2,6 +2,6 @@
 
 
 const DBHOST = 'localhost';
-const DBNAME = 'mvcdb';
+const DBNAME = 'php_mvc';
 const DBUSERNAME = 'root';
 const DBPASSWORD = '1289..//';
