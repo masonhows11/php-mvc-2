@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+
 class HomeController extends Controller
 {
 
@@ -9,19 +11,8 @@ class HomeController extends Controller
     {
 
 
-        //        $categories = \App\Models\Category::all();
-        //        foreach ($categories as $category)
-        //        {
-        //            echo $category->id .'-'. $category->title .'--';
-        //        }
-
-        //        $categories = \App\Models\Category::paginate(2);
-        //        foreach ($categories as $category) {
-        //            echo $category->id . '-' . $category->title . '--';
-        //        }
-
-        $post = \App\Models\Post::find(46);
-        dd($post);
+         $posts = Post::where('id','>',54)->get();
+         dd($posts);
         //echo "index method in HomeController";
     }
 

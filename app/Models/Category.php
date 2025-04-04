@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use AllowDynamicProperties;
+
 use System\Database\ORM\Model;
 
-#[AllowDynamicProperties]
+
 class Category extends Model
 {
 

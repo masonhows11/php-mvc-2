@@ -2,6 +2,7 @@
 
 namespace System\Database\ORM;
 
+use AllowDynamicProperties;
 use System\Database\Traits\HasAttributes;
 use System\Database\Traits\HasCrud;
 use System\Database\Traits\HasSoftDelete;
@@ -9,7 +10,7 @@ use System\Database\Traits\HasRelation;
 use System\Database\Traits\HasQueryBuilder;
 use System\Database\Traits\HasMethodCaller;
 
-
+#[AllowDynamicProperties]
 abstract  class Model
 {
     use HasMethodCaller,HasQueryBuilder,HasRelation,HasAttributes,HasCrud;
