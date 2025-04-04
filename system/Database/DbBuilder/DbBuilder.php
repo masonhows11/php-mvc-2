@@ -34,8 +34,8 @@ class DbBuilder
             return true;
         } catch (\PDOException $exception) {
             echo "Migrate has failed" . $exception;
-            return false;
         }
+        return false;
 
 
     }
