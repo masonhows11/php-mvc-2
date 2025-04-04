@@ -64,7 +64,7 @@ trait HasCrud
 
         if (!isset($this->{$this->primaryKey})) {
 
-            $object = $this->findLastStoreRecord(DBConnection::newInsertId());
+            $object = $this->findMethod(DBConnection::newInsertId());
             // get default properties define in class & store in $defaultVars
             $defaultVars = get_class_vars(get_called_class());
             // get all properties define in obj of model/class & store in $allVars

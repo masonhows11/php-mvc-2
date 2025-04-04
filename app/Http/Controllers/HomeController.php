@@ -14,10 +14,14 @@ class HomeController extends Controller
         //        {
         //            echo $category->id .'-'. $category->title .'--';
         //        }
-        $categories = \App\Models\Category::paginate(2);
-        foreach ($categories as $category) {
-            echo $category->id . '-' . $category->title . '--';
-        }
+
+        //        $categories = \App\Models\Category::paginate(2);
+        //        foreach ($categories as $category) {
+        //            echo $category->id . '-' . $category->title . '--';
+        //        }
+
+        $post = \App\Models\Post::find(46);
+        dd($post);
         //echo "index method in HomeController";
     }
 
