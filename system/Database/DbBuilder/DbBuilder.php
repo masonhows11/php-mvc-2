@@ -2,6 +2,7 @@
 
 namespace System\Database\DbBuilder;
 
+use JetBrains\PhpStorm\NoReturn;
 use System\Database\DBConnection\DBConnection;
 
 
@@ -9,7 +10,7 @@ class DbBuilder
 {
 
 
-    public function __construct()
+    #[NoReturn] public function __construct()
     {
 
         $this->createTables();
@@ -18,21 +19,26 @@ class DbBuilder
     }
 
 
-    private function createTables(): void
+    private function createTables()
     {
         $migrations = $this->getMigrations();
 
         $pdoInstance = DBConnection::getDbConnectionInstance();
 
-        foreach ($migrations as $migration){
+        try {
+            foreach ($migrations as $migration) {
 
-            $statement = $pdoInstance->prepare($migration);
-            $statement->execute();
+                $statement = $pdoInstance->prepare($migration);
+                $statement->execute();
+            }
+            return true;
+        } catch (\PDOException $exception) {
+            echo "Migrate has failed" . $exception;
+            return false;
         }
 
+
     }
-
-
 
 
 }
