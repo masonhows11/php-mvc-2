@@ -141,7 +141,7 @@ trait HasQueryBuilder
         // limit section
         if(!empty($this->limit)){
             // for order on multi-column
-            $query .=' LIMIT '.$this->limit['from'] .' '.$this->limit['number'].' ';
+            $query .=' LIMIT '.$this->limit['from'].' '.$this->limit['number'].' ';
         }
 
         // end query string
@@ -153,16 +153,13 @@ trait HasQueryBuilder
         // run query on database
         $pdoInstance = DBConnection::getDbConnectionInstance();
         // prepared state
-        $statement = $pdoInstance->prepare($query);
+        print_r($statement = $pdoInstance->prepare($query));
         // execute
         if(sizeof($this->bindValues) > sizeof($this->values))
         {
-
             sizeof($this->bindValues) > 0 ? $statement->execute($this->bindValues) :
-            $statement->execute();
-
+                $statement->execute();
         }else{
-
             sizeof($this->values) > 0 ? $statement->execute(array_values($this->values)) :
                 $statement->execute();
         }

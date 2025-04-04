@@ -14,7 +14,7 @@ class HomeController extends Controller
         //        {
         //            echo $category->id .'-'. $category->title .'--';
         //        }
-        $categories = \App\Models\Category::paginate(5);
+        $categories = \App\Models\Category::paginate(2);
         foreach ($categories as $category) {
             echo $category->id . '-' . $category->title . '--';
         }
