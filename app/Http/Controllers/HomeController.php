@@ -2,11 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Post;
-use App\Models\Role;
-use App\Models\User;
-
 
 class HomeController extends Controller
 {
