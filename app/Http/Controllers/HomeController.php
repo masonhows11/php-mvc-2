@@ -8,7 +8,17 @@ class HomeController extends Controller
     public function index()
     {
 
-        echo "index method in HomeController";
+
+        //        $categories = \App\Models\Category::all();
+        //        foreach ($categories as $category)
+        //        {
+        //            echo $category->id .'-'. $category->title .'--';
+        //        }
+        $categories = \App\Models\Category::paginate(5);
+        foreach ($categories as $category) {
+            echo $category->id . '-' . $category->title . '--';
+        }
+        //echo "index method in HomeController";
     }
 
     public function create()

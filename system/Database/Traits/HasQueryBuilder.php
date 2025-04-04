@@ -177,7 +177,7 @@ trait HasQueryBuilder
         // $query .= "SELECT COUNT(*) FROM $this->table";
 
         // syntax user.*
-        $query .= "SELECT COUNT(".$this->getTableName().".*) FROM ". $this->getTableName();
+        $query .= "SELECT COUNT(*) FROM ".$this->getTableName();
 
         // where section
         if(!empty($this->where)){
