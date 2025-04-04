@@ -26,12 +26,13 @@ class DbBuilder
         return [];
     }
 
-    private function getOldMigration(): array
+    private function getFromOldMigration(): array
     {
-        return [];
+        $data = file_get_contents(__DIR__.'/oldTables.db');
+        return empty($data) ? [] : unserialize($data);
     }
 
-    private function putOldMigration(): array
+    private function putToOldMigration(): array
     {
         return [];
     }
