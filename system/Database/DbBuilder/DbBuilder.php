@@ -23,8 +23,20 @@ class DbBuilder
     {
 
         $oldMigrationArray =  $this->getFromOldMigration();
-        $migrationDir = BASE_DIR.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
-        return [];
+        $migrationsDir = BASE_DIR.DIRECTORY_SEPARATOR.'database'.DIRECTORY_SEPARATOR.'migrations'.DIRECTORY_SEPARATOR;
+        $allMigrationsArray = glob($migrationsDir.'*.php');
+        // check old migrations from new migrations
+        $newMigrationsArray = array_diff($allMigrationsArray,$oldMigrationArray);
+        $this->putToOldMigration($allMigrationsArray);
+
+        $sqlCodeArray  = [];
+        foreach ($newMigrationsArray as $migration){
+
+            $sqlCode = require $migration;
+            $sqlCodeArray[] = $sqlCode[0];
+            //array_push($sqlCodeArray,$sqlCode[0]);
+        }
+        return $sqlCodeArray;
     }
 
     private function getFromOldMigration(): array
