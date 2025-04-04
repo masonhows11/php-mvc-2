@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Post;
+use App\Models\Role;
 
 
 class HomeController extends Controller
@@ -11,9 +13,7 @@ class HomeController extends Controller
     public function index()
     {
 
-
-         $posts = Category::find(2)->posts()->get();
-         dd($posts);
+      
         //echo "index method in HomeController";
     }
 
