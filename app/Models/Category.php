@@ -20,7 +20,7 @@ class Category extends Model
     public function posts()
     {
         return
-            $this->hasMany('app\Models\Post','cat_id', 'id');
+            $this->hasMany('App\Models\Post','cat_id', 'id');
     }
 
 }

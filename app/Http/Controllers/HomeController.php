@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Category;
+
 
 class HomeController extends Controller
 {
@@ -11,7 +12,7 @@ class HomeController extends Controller
     {
 
 
-         $posts = Post::where('id','>',54)->get();
+         $posts = Category::find(2)->posts()->get();
          dd($posts);
         //echo "index method in HomeController";
     }

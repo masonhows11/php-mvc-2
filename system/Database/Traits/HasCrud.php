@@ -153,7 +153,9 @@ trait HasCrud
         $operator = 'AND';
         $this->setWhere($operator, $condition);
         // this methods like laravel us method chaining
-        $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
+        $this->setAllowedMethods(['get', 'where', 'whereOr',
+            'whereIn', 'whereNull', 'whereNotNull', 'limit',
+            'orderBy', 'get', 'paginate', 'find']);
 
         // find out what is $this on return
         return $this;
@@ -175,7 +177,9 @@ trait HasCrud
 
         $operator = 'OR';
         $this->setWhere($operator, $condition);
-        $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
+        $this->setAllowedMethods(['get', 'where', 'whereOr',
+            'whereIn', 'whereNull', 'whereNotNull',
+            'limit', 'orderBy', 'get', 'paginate', 'find']);
         return $this;
     }
 
@@ -216,7 +220,9 @@ trait HasCrud
             $condition = $this->getAttributeName($attr) . ' IN (' . implode(' , ', $valuesArray) . ')';
             $operator = 'AND';
             $this->setWhere($operator, $condition);
-            $this->setAllowedMethods(['get', 'where', 'whereOr', 'whereIn', 'whereNull', 'whereNotNull', 'limit', 'orderBy', 'get', 'paginate', 'find']);
+            $this->setAllowedMethods(['get', 'where', 'whereOr',
+                'whereIn', 'whereNull', 'whereNotNull',
+                'limit', 'orderBy', 'get', 'paginate', 'find']);
             // because method chaining we return result
             // this method for use for other method
             return $this;
@@ -292,15 +298,6 @@ trait HasCrud
         return [];
     }
 
-
-
-
-
-
-    //    protected function findLastStoreRecord(false|string $newInsertId)
-    //    {
-    //
-    //    }
 
 
 }

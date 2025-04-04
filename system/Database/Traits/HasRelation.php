@@ -64,8 +64,8 @@ trait HasRelation
         // b right table like posts
         // category hasMany posts
 
-        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN " . $this->getTableName() . " AS `b` ON `a`.`{$otherKey}` = `b`.`{$foreignKey}` ");
-        $this->setWhere('AND', "`a`.`{$otherKey}` = ? ");
+        $this->setSql("SELECT `b`.* FROM `{$table}` AS `a` JOIN ".$this->getTableName()." AS `b` ON `a`.`{$otherKey}` = `b`.`{$foreignKey}` ");
+        $this->setWhere('AND', "`a`.`$otherKey` = ? ");
         $this->table = 'b';
         $this->addValue($otherKey, $otherKeyValue);
         return $this;
