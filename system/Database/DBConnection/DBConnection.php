@@ -33,7 +33,7 @@ class DBConnection
         try {
 
             return  new \PDO("mysql:host=".DBHOST.";dbname=".DBNAME,DBUSERNAME,DBPASSWORD,$options);
-            
+
         }catch (\PDOException $exception){
 
             echo "error in database connection: ".$exception->getMessage();

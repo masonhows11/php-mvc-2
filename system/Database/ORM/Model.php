@@ -26,7 +26,7 @@ abstract  class Model
     protected string $createdAt = 'created_at';
     protected string $updatedAt = 'updated_at';
 
-    protected bool|null $deleteAt = null;
+    protected bool|null $deletedAt = null;
 
     protected array $collection = [];
 
