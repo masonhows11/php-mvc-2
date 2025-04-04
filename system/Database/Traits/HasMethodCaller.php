@@ -34,10 +34,10 @@ trait HasMethodCaller
     protected function methodCaller($object, $method, $args)
     {
         $suffix = 'Method';
-        $methodName = $method . $suffix;
+        $methodName = $method.$suffix;
 
         // return $methodName;
-        if (in_array($methodName, $this->AllowedMethods)) {
+        if (in_array($method,$this->AllowedMethods)) {
             // return means : return the result of current method to next method
             return call_user_func_array(array($object, $methodName), $args);
         } else {
