@@ -19,7 +19,24 @@ class DbBuilder
     }
 
 
-    private function createTables()
+
+    private function getMigrations(): array
+    {
+
+        return [];
+    }
+
+    private function getOldMigration(): array
+    {
+        return [];
+    }
+
+    private function putOldMigration(): array
+    {
+        return [];
+    }
+
+    private function createTables(): bool
     {
         $migrations = $this->getMigrations();
 
@@ -39,6 +56,8 @@ class DbBuilder
 
 
     }
+
+
 
 
 }
