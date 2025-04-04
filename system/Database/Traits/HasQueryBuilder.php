@@ -148,7 +148,7 @@ trait HasQueryBuilder
         // ready for execute
         $query .= ' ;';
 
-        echo $query.'<hr/>';
+        // echo $query.'<hr/>';
 
         // run query on database
         $pdoInstance = DBConnection::getDbConnectionInstance();
