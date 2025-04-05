@@ -24,17 +24,15 @@ class Request
 
     public function __construct()
     {
-        if (isset($_POST))
-        {
+        if (isset($_POST)) {
             $this->postAttribute();
         }
-        if(!empty($_FILES))
-        {
+        if (!empty($_FILES)) {
             $this->files = $_FILES;
         }
 
         $rules = $this->rules();
-        empty($rules) ? : $this->run($rules);
+        empty($rules) ?: $this->run($rules);
 
         $this->errorRedirect();
     }
@@ -67,8 +65,23 @@ class Request
 
     protected function run($rules)
     {
-        foreach ($rules as $att => $values){
+        foreach ($rules as $att => $values) {
 
+            $rulesArray = explode('|', $values);
+            if (in_array('file', $rulesArray))
+            {
+                unset($rulesArray[array_search('file',$rulesArray)]);
+                $this->fileValidation($att, $rulesArray);
+
+            } elseif (in_array('number', $rulesArray))
+            {
+
+                $this->numberValidation($att, $rulesArray);
+
+            } else
+            {
+                $this->normalValidation($att, $rulesArray);
+            }
 
         }
     }
