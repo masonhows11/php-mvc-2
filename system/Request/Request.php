@@ -32,6 +32,17 @@ class Request
         {
             $this->files = $_FILES;
         }
+
+        $rules = $this->rules();
+        empty($rules) ? : $this->run($rules);
+
+        $this->errorRedirect();
+    }
+
+    protected function rules(): array
+    {
+
+        return [];
     }
 
     public function file($name)
@@ -39,7 +50,7 @@ class Request
         return isset($this->files[$name]) ? $this->files[$name] : false;
     }
 
-    protected function postAttribute()
+    protected function postAttribute(): void
     {
         // key -> value = first_name : hassan
         foreach ($_POST as $key => $value) {
@@ -53,4 +64,12 @@ class Request
         return $this->request;
     }
 
+
+    protected function run($rules)
+    {
+        foreach ($rules as $att => $values){
+
+
+        }
+    }
 }
