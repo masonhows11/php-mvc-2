@@ -131,15 +131,23 @@ trait HasValidationRules
         }
     }
 
+    protected function date($name)
+    {
+        if($this->checkFieldExists($name))
+        {   // 1399-02-22 -> /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
+            if(!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$this->request[$name])){
+
+            };
+
+        }
+    }
+
     protected function email()
     {
 
     }
 
-    protected function date()
-    {
 
-    }
 
 
     //// string methods validation
