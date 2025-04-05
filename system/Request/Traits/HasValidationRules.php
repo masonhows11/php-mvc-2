@@ -86,9 +86,14 @@ trait HasValidationRules
 
         }
     }
-    protected function required()
+    protected function required($name)
     {
+        // $name -> is name field come from post request
+        // like name title age phone
+        if ((!isset($this->request[$name]) or $this->request[$name] === '' ) && $this->checkFirstError($name)){
 
+            $this->setError($name,"$name is required");
+        }
     }
 
 
@@ -99,7 +104,7 @@ trait HasValidationRules
 
             if($this->request[$name] >= $count && $this->checkFirstError($name))
             {
-                $this->setError($name,"max length equal or lower than $count characters");
+                $this->setError($name,"max number equal or lower than $count");
             }
         }
     }
@@ -110,14 +115,20 @@ trait HasValidationRules
 
             if($this->request[$name] <= $count && $this->checkFirstError($name))
             {
-                $this->setError($name,"min length equal or upper than $count characters");
+                $this->setError($name,"min number equal or upper than $count");
             }
         }
     }
 
-    protected function number()
+    protected function number($name)
     {
-        
+        if($this->checkFieldExists($name))
+        {
+            if(!is_numeric($this->request[$name]) && $this->checkFirstError($name))
+            {
+                $this->setError($name,"$name must be number format");
+            }
+        }
     }
 
     protected function email()
