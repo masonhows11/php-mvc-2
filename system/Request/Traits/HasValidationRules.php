@@ -93,7 +93,7 @@ trait HasValidationRules
 
 
     //// number/integer methods validation
-    protected function maxNumber($name,$count)
+    protected function maxNumber($name,$count): void
     {
         if($this->checkFieldExists($name)){
 
@@ -104,7 +104,7 @@ trait HasValidationRules
         }
     }
 
-    protected function minNumber($name,$count)
+    protected function minNumber($name,$count): void
     {
         if($this->checkFieldExists($name)){
 
@@ -132,7 +132,7 @@ trait HasValidationRules
 
 
     //// string methods validation
-    protected function maxStr($name,$count)
+    protected function maxStr($name,$count): void
     {
         if($this->checkFieldExists($name)){
 
@@ -143,7 +143,7 @@ trait HasValidationRules
         }
     }
 
-    protected function minStr($name,$count)
+    protected function minStr($name,$count): void
     {
         if($this->checkFieldExists($name)){
 
