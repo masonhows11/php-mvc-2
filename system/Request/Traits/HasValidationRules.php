@@ -86,7 +86,13 @@ trait HasValidationRules
 
         }
     }
+    protected function required()
+    {
 
+    }
+
+
+    //// number/integer methods validation
     protected function maxNumber()
     {
         
@@ -112,14 +118,11 @@ trait HasValidationRules
 
     }
 
-    protected function required()
+
+    //// string methods validation
+    protected function maxStr($name,$count)
     {
-
-    }
-
-    protected function maxStr()
-    {
-
+        
     }
 
     protected function minStr()
