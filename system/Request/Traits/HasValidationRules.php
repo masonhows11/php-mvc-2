@@ -93,14 +93,26 @@ trait HasValidationRules
 
 
     //// number/integer methods validation
-    protected function maxNumber()
+    protected function maxNumber($name,$count)
     {
-        
+        if($this->checkFieldExists($name)){
+
+            if($this->request[$name] >= $count && $this->checkFirstError($name))
+            {
+                $this->setError($name,"max length equal or lower than $count characters");
+            }
+        }
     }
 
-    protected function minNumber()
+    protected function minNumber($name,$count)
     {
-        
+        if($this->checkFieldExists($name)){
+
+            if($this->request[$name] <= $count && $this->checkFirstError($name))
+            {
+                $this->setError($name,"min length equal or upper than $count characters");
+            }
+        }
     }
 
     protected function number()
@@ -122,12 +134,24 @@ trait HasValidationRules
     //// string methods validation
     protected function maxStr($name,$count)
     {
-        
+        if($this->checkFieldExists($name)){
+
+            if(strlen($this->request[$name]) >= $count && $this->checkFirstError($name))
+            {
+                $this->setError($name,"max length equal or lower than $count characters");
+            }
+        }
     }
 
-    protected function minStr()
+    protected function minStr($name,$count)
     {
+        if($this->checkFieldExists($name)){
 
+            if(strlen($this->request[$name]) <= $count && $this->checkFirstError($name))
+            {
+                $this->setError($name,"min length equal or upper than $count characters");
+            }
+        }
     }
 
 
