@@ -9,4 +9,21 @@ use System\Request\Traits\HasValidationRules;
 class Request
 {
 
+    use HasValidationRules,HasRunValidation,HasFileValidationRules;
+
+
+    protected bool $errorExist = false;
+
+    protected $request;
+
+    protected $files = null;
+
+    protected array $errorVariableName = [];
+
+
+    public function __construct()
+    {
+        
+    }
+
 }
