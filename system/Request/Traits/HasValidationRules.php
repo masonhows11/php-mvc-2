@@ -137,14 +137,21 @@ trait HasValidationRules
         {   // 1399-02-22 -> /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
             if(!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/",$this->request[$name])){
 
+                $this->setError($name,"$name not valid date format");
             };
 
         }
     }
 
-    protected function email()
+    protected function email($name)
     {
-
+        if($this->checkFieldExists($name))
+        {
+            if(!filter_var($this->request[$name], FILTER_VALIDATE_EMAIL) && $this->checkFirstError($name))
+            {
+                $this->setError($name,"$name not valid email format");
+            }
+        }
     }
 
 
