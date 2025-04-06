@@ -45,19 +45,46 @@ trait HasFileValidationRules
         }
     }
 
-    protected function fileType($name,$typeArray)
+    protected function fileType($name,$typesArray)
     {
+        if($this->checkFirstError($name) && $this->checkFieldExists($name)){
 
+            $currentFileType = explode('/',$this->files[$name]['type'][1]);
+
+            if(!in_array($currentFileType,$typesArray))
+            {
+                $this->setError($name, "$name type must be".implode(',',$typesArray));
+            }
+        }
     }
 
     protected function MaxFile($name,$size)
     {
+        // size as byte
+        // kb to byte
+        $size = $size * 1024;
+        if($this->checkFirstError($name) && $this->checkFieldExists($name)){
+
+            if($this->files[$name]['size'] > $size)
+            {
+                $this->setError($name, "$name size must be lower than ".($size / 1024)." Kb ");
+            }
+        }
+
 
     }
 
     protected function minFile($name,$size)
     {
+        $size = $size * 1024;
 
+        if($this->checkFirstError($name) && $this->checkFieldExists($name)){
+
+            if($this->files[$name]['size'] < $size)
+            {
+                $this->setError($name, "$name size must be bigger than ".($size / 1024)." Kb ");
+            }
+        }
     }
 
 }
