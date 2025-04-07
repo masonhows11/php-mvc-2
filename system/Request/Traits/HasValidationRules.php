@@ -83,7 +83,7 @@ trait HasValidationRules
         }
     }
 
-    protected function required($name)
+    protected function required($name): void
     {
         // $name -> is name field come from post request
         // like name title age phone
@@ -115,7 +115,7 @@ trait HasValidationRules
         }
     }
 
-    protected function number($name)
+    protected function number($name): void
     {
         if ($this->checkFieldExists($name)) {
             if (!is_numeric($this->request[$name]) && $this->checkFirstError($name)) {
@@ -124,7 +124,7 @@ trait HasValidationRules
         }
     }
 
-    protected function date($name)
+    protected function date($name): void
     {
         if ($this->checkFieldExists($name)) {   // 1399-02-22 -> /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/
             if (!preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $this->request[$name])) {
@@ -135,7 +135,7 @@ trait HasValidationRules
         }
     }
 
-    protected function email($name)
+    protected function email($name): void
     {
         if ($this->checkFieldExists($name)) {
             if (!filter_var($this->request[$name], FILTER_VALIDATE_EMAIL) && $this->checkFirstError($name)) {
@@ -167,7 +167,7 @@ trait HasValidationRules
     }
 
 
-    protected function existsIn($name, $table, $field_id = "id")
+    protected function existsIn($name, $table, $field_id = "id"): void
     {
         if ($this->checkFieldExists($name)) {
             if ($this->checkFirstError($name)) {

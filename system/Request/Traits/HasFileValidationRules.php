@@ -9,7 +9,7 @@ trait HasFileValidationRules
 
     // $name id field name
     // rulesArray is array of rule validation like required,max,min
-    protected function fileValidation($name, $rulesArray)
+    protected function fileValidation($name, $rulesArray): void
     {
         foreach ($rulesArray as $rule) {
 

@@ -25,7 +25,7 @@ class Request
     public function __construct()
     {
         if (isset($_POST)) {
-            $this->postAttribute();
+            $this->postAttributes();
         }
         if (!empty($_FILES)) {
             $this->files = $_FILES;
@@ -48,7 +48,7 @@ class Request
         return isset($this->files[$name]) ? $this->files[$name] : false;
     }
 
-    protected function postAttribute(): void
+    protected function postAttributes(): void
     {
         // key -> value = first_name : hassan
         foreach ($_POST as $key => $value) {
@@ -57,13 +57,13 @@ class Request
         }
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->request;
     }
 
 
-    protected function run($rules)
+    protected function run($rules): void
     {
         foreach ($rules as $att => $values) {
 
