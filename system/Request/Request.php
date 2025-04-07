@@ -39,7 +39,6 @@ class Request
 
     protected function rules(): array
     {
-
         return [];
     }
 
