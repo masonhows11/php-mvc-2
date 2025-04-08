@@ -26,9 +26,12 @@ class Session
     }
 
 
+    // call session method as static
+    // like Session::set() , Session::get()
     public static function __callStatic(string $name, array $arguments)
     {
-        // TODO: Implement __callStatic() method.
+       $instance = new self();
+       return call_user_func_array([$instance,$name],$arguments);
     }
 
 }
