@@ -97,7 +97,7 @@ class Auth
     }
 
     // login by id and create session by user id
-    private function loginByIdMethod($id)
+    private function loginByIdMethod($id): bool
     {
         $user = User::where('id',$id)->get();
 
@@ -113,6 +113,12 @@ class Auth
 
         }
 
+    }
+
+    private function logOut()
+    {
+        Session::remove('user');
+        return redirect($this->redirectTo);
     }
 
     //    private function idMethod()
