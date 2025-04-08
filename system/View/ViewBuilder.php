@@ -7,8 +7,12 @@ class ViewBuilder
 {
     use ViewLoader;
 
+    public $content;
+
     public function run($path)
     {
+
+
         
     }
 
