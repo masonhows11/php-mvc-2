@@ -15,7 +15,7 @@ trait ExtendContent
     {
         $layoutsFilePath = $this->findExtends();
         if($layoutsFilePath){
-            
+
         }
     }
 
@@ -25,7 +25,7 @@ trait ExtendContent
         $filePathArray = [];
 
         // to use extends method or not
-        preg_match("/s*@extends+\('([^]+)'\)/",$this->content,$filePathArray);
+        preg_match("/s*@extends+\('([^)]+)'\)/",$this->content,$filePathArray);
 
         return isset($filePathArray[1]) ? $filePathArray[1] : false;
     }
