@@ -7,16 +7,16 @@ trait ViewLoader
     private array $viewNameArray = [];
 
 
-    private function ViewLoader($path)
+    private function viewLoader($path)
     {
-        
+        $dir = trim($path," .");
     }
 
 
-    private function registerView($view)
+    private function registerView($view): void
     {
-
+        $this->viewNameArray[] = $view;
     }
 
-    
+
 }
