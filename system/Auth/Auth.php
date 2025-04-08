@@ -34,6 +34,47 @@ class Auth
 
     }
 
+    private function checkMethod()
+    {
+
+        if (!Session::get('user')) {
+            return redirect($this->redirectTo);
+        }
+
+        $user = User::find(Session::get('user'));
+
+        if (empty($user))
+        {
+            Session::remove('user');
+            return redirect($this->redirectTo);
+
+        } else {
+
+            return true;
+        }
+
+    }
+
+    private function checkLoginMethod()
+    {
+
+        if (!Session::get('user')) {
+            return redirect($this->redirectTo);
+        }
+
+        $user = User::find(Session::get('user'));
+
+        if (empty($user))
+        {
+            Session::remove('user');
+            return redirect($this->redirectTo);
+
+        } else {
+
+            return true;
+        }
+
+    }
 
     private function idMethod()
     {
@@ -55,8 +96,7 @@ class Auth
     protected function methodCaller($method, $args)
     {
         $suffix = 'Method';
-        $methodName = $method . $suffix;
-
+        $methodName = $method.$suffix;
         return call_user_func_array(array($this, $methodName), $args);
 
     }
