@@ -12,7 +12,7 @@ class ViewBuilder
     public function run($path)
     {
 
-
+        $this->content = $this->viewLoader($path);
         
     }
 
