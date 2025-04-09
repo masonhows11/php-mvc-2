@@ -39,9 +39,9 @@ trait ExtendContent
         $yieldsNamesArray = [];
 
         // to use extends method or not
-        preg_match_all("/s*@yield+\('([^)]+)'\)/",$this->extendsContent,$yieldsNamesArray);
+        preg_match_all("/s*@yield+\('([^)]+)'\)/",$this->extendsContent,$yieldsNamesArray,PREG_UNMATCHED_AS_NULL);
 
-        return isset($filePathArray[1]) ? $filePathArray[1] : false;
+        return isset($yieldsNamesArray[1]) ? $yieldsNamesArray[1] : false;
     }
 
 
