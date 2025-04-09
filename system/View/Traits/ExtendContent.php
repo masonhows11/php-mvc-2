@@ -23,9 +23,9 @@ trait ExtendContent
             $yieldsNamesArray = $this->findYieldsNames();
 
             if($yieldsNamesArray){
-                foreach ($yieldsNamesArray as $yieldsName)
+                foreach ($yieldsNamesArray as $yieldName)
                 {
-                    $this->initialYields($yieldsName);
+                    $this->initialYields($yieldName);
                 }
             }
 
@@ -50,7 +50,7 @@ trait ExtendContent
         $yieldsNamesArray = [];
 
         // to use extends method or not
-        preg_match_all("/s*@yield+\('([^)]+)'\)/",$this->extendsContent,$yieldsNamesArray,PREG_UNMATCHED_AS_NULL);
+        preg_match_all("/@yield+\('([^)]+)'\)/",$this->extendsContent,$yieldsNamesArray,PREG_UNMATCHED_AS_NULL);
 
         // return isset($yieldsNamesArray[1]) ? $yieldsNamesArray[1] : false;
         return $yieldsNamesArray[1] ?? false;
