@@ -17,6 +17,7 @@ class AppServiceProvider extends Provider
 
 
         Composer::view("app.index", function (){
+
             $ads = Ads::all();
             $sumArea = 0;
             foreach ($ads as $advertise)
@@ -25,12 +26,14 @@ class AppServiceProvider extends Provider
             }
             $usersCount = count(User::all());
             $postsCount = count(Post::all());
+            
             return [
                 "sumArea"       => $sumArea,
                 "usersCount"    => $usersCount,
                 "adsCount"      => count($ads),
                 "postsCount"    => $postsCount
             ];
+
         });
 
     }
