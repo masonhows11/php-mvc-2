@@ -14,8 +14,6 @@ class AppServiceProvider extends Provider
 
     public function boot()
     {
-
-
         Composer::view("app.index", function (){
 
             $ads = Ads::all();

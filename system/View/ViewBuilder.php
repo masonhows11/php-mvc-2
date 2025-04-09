@@ -2,6 +2,7 @@
 
 namespace System\View;
 
+use App\Providers\AppServiceProvider;
 use Exception;
 use System\View\Traits\ViewLoader;
 use System\View\Traits\ExtendContent;
@@ -27,6 +28,8 @@ class ViewBuilder
 
         // setViews is call static method
         Composer::setViews($this->viewNameArray);
+
+        $appServiceProvider = new AppServiceProvider();
         
     }
 

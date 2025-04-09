@@ -25,13 +25,17 @@ class Composer
 
             foreach ($viewVars as $key => $value) {
 
-                    $this->vars[$key] = $value;
-                    //// store below data as key->value into $vars
-                    //// pass these variables to view/views
-                    //      "sumArea"       => $sumArea,
-                    //      "usersCount"    => $usersCount,
-                    //      "adsCount"      => count($ads),
-                    //      "postsCount"    => $postsCount
+                $this->vars[$key] = $value;
+                //// store below data as key->value into $vars
+                //// pass these variables to view/views
+                //      "sumArea"       => $sumArea,
+                //      "usersCount"    => $usersCount,
+                //      "adsCount"      => count($ads),
+                //      "postsCount"    => $postsCount
+            }
+
+            if (isset($this->viewArray[$name])) {   // for prevent set view name in composer view method
+                unset($this->viewArray[$name]);
             }
 
         }
@@ -50,6 +54,24 @@ class Composer
         return $this->vars;
     }
 
+    public static function __callStatic($name, $args)
+    {
+        $instance = self::getInstance();
+        switch ($name) {
+
+            case "view":
+                return call_user_func_array(array($instance,"registerView"), $args);
+                break;
+            case "setViews":
+                return call_user_func_array(array($instance,"setViewArray"), $args);
+                break;
+            case "getVars":
+                return call_user_func_array(array($instance,"getViewVars"), $args);
+                break;
+        }
+    }
+
+    // singleton method
     private static function getInstance()
     {
         if (empty(self::$instance)) {
