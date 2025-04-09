@@ -24,6 +24,9 @@ class ViewBuilder
         $this->checkExtendsContent();
 
         $this->checkIncludesContent();
+
+        // setViews is call static method
+        Composer::setViews($this->viewNameArray);
         
     }
 

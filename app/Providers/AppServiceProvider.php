@@ -26,7 +26,7 @@ class AppServiceProvider extends Provider
             }
             $usersCount = count(User::all());
             $postsCount = count(Post::all());
-            
+
             return [
                 "sumArea"       => $sumArea,
                 "usersCount"    => $usersCount,
