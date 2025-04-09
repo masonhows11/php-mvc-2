@@ -15,7 +15,7 @@ trait ViewLoader
 
         $dir = str_replace(".","/",$dir);
 
-        // to check files/directories is exists
+        // to check files/directories is exits
         if(file_exists( dirname(dirname(dirname(__DIR__)))."/resources/view/$dir.php" ))
         {
 

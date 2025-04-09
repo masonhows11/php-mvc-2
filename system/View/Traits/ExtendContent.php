@@ -8,7 +8,7 @@ trait ExtendContent
 {
 
 
-    private $extendsContent;
+    private string $extendsContent;
 
 
     /**
