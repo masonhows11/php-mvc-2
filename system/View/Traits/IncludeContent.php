@@ -6,32 +6,38 @@ trait IncludeContent
 {
 
 
-
-
     private function checkIncludesContent(): void
     {
-
+        while (1) {
+            $includesNamesArray = $this->findIncludesNames();
+            if(!empty($includesNamesArray)){
+                foreach ($includesNamesArray as $includeName){
+                    $this->initialIncludes($includeName);
+                }
+            }
+        }
     }
 
 
-    private function findExtends(): null|false
+    private function findIncludesNames(): null|false
     {
-        $filePathArray = [];
+        $includesNamesArray = [];
 
         // to use extends method or not
-        preg_match("/s*@extends+\('([^)]+)'\)/",$this->content,$filePathArray);
+        preg_match("/@include+\('([^)]+)'\)/", $this->content, $includesNamesArray);
 
-        //  return isset($filePathArray[1]) ? $filePathArray[1] : false;
-        return $filePathArray[1] ?? false;
+        return isset($includesNamesArray[1]) ? $includesNamesArray[1] : false;
+        //return $includesNamesArray[1] ?? false;
     }
 
 
-
-
-    private function initialIncludes($includeName)
+    /**
+     * @throws \Exception
+     */
+    private function initialIncludes($includeName): array|string
     {
-       
-        return $this->extendsContent = str_replace("@yield('$yieldsName')",$sectionContent,$this->extendsContent);
+        // @include('views.404')
+        return $this->content = str_replace("@include('$includeName')", $this->viewLoader($includeName), $this->content);
 
     }
 }

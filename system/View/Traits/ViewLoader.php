@@ -9,7 +9,10 @@ trait ViewLoader
     private array $viewNameArray = [];
 
 
-    private function viewLoader($path)
+    /**
+     * @throws Exception
+     */
+    private function viewLoader($path): string
     {
         $dir = trim($path," .");
 
@@ -19,9 +22,9 @@ trait ViewLoader
         if(file_exists( dirname(dirname(dirname(__DIR__)))."/resources/view/$dir.php" ))
         {
 
+            // below code get html tags & put them into $viewContents
             $this->registerView($dir);
-            $viewContents = htmlentities(file_get_contents( dirname(dirname(dirname(__DIR__)))."/resources/view/$dir.php" ));   
-            return $viewContents;
+            return htmlentities(file_get_contents( dirname(dirname(dirname(__DIR__)))."/resources/view/$dir.php" ));
             
         }else {
 
