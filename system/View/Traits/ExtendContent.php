@@ -14,7 +14,7 @@ trait ExtendContent
     /**
      * @throws \Exception
      */
-    private function checkExtendsContent()
+    private function checkExtendsContent(): void
     {
         $layoutsFilePath = $this->findExtends();
         if($layoutsFilePath){
@@ -65,14 +65,28 @@ trait ExtendContent
 
 
         // find yield value in child view
-        // if yield parent is define in extends view
+        // if yield parent is define in extends/master view
         // example @yield('content') -> @section('content')
         $startPos = strpos($string,$startWord);
         if($startPos === false){
-
-            // remove @yield from extends view
+            // remove @yield from extends/master view
             return $this->extendsContent = str_replace("@yield('$yieldsName')","",$this->extendsContent);
         }
+
+
+        // if close section not found remove yield parent is define in extends/master view
+        $startPos += strlen($startWord); // @section('content')
+        $endPost = strpos($string,$endWord,$startWord);  // @endsection('content')
+        if($endPost === false){
+            // remove @yield from extends/master view
+            return $this->extendsContent = str_replace("@yield('$yieldsName')","",$this->extendsContent);
+        }
+
+        $length = $endPost - $startPos;
+        $sectionContent = substr($string,$startPos,$length);
+        // put content between section & endsection in child view
+        return $this->extendsContent = str_replace("@yield('$yieldsName')",$sectionContent,$this->extendsContent);
+
     }
 
 }
