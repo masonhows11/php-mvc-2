@@ -6,14 +6,20 @@ trait IncludeContent
 {
 
 
+    /**
+     * @throws \Exception
+     */
     private function checkIncludesContent(): void
     {
+        // this while(1) for while we have nested includes
         while (1) {
             $includesNamesArray = $this->findIncludesNames();
-            if(!empty($includesNamesArray)){
-                foreach ($includesNamesArray as $includeName){
+            if (!empty($includesNamesArray)) {
+                foreach ($includesNamesArray as $includeName) {
                     $this->initialIncludes($includeName);
                 }
+            } else {
+                break;
             }
         }
     }
@@ -26,8 +32,8 @@ trait IncludeContent
         // to use extends method or not
         preg_match("/@include+\('([^)]+)'\)/", $this->content, $includesNamesArray);
 
-        return isset($includesNamesArray[1]) ? $includesNamesArray[1] : false;
-        //return $includesNamesArray[1] ?? false;
+        // return isset($includesNamesArray[1]) ? $includesNamesArray[1] : false;
+        return $includesNamesArray[1] ?? false;
     }
 
 
