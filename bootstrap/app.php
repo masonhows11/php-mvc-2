@@ -26,6 +26,16 @@ if (isset($_SESSION['flash']))
     unset($_SESSION['flash']);
 }
 
+//// ready for save new data for first time
+//// or on every request
+if (isset($_SESSION['temporary_error'])) {
+    unset($_SESSION['temporary_error']);
+}
+if (isset($_SESSION['error']))
+{
+    $_SESSION['temporary_error'] = $_SESSION['error'];
+    unset($_SESSION['error']);
+}
 
 
 $params = [];
