@@ -1,4 +1,7 @@
 <?php
+
+ob_start();
+session_start();
 // add helper
 require_once ("../system/Helpers/helper.php");
 
