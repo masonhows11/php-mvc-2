@@ -2,6 +2,8 @@
 
 namespace System\Config;
 
+use Exception;
+
 class Config
 {
 
@@ -27,6 +29,33 @@ class Config
     }
 
 
+
+    private static function getInstance(): Config
+    {
+            if(empty(self::$instance))
+            {
+                self::$instance = new self;
+            }
+
+            return self::$instance;
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    public static function get($key)
+    {
+        $instance = self::getInstance();
+        if(isset($instance->config_dot_array[$key])){
+
+            return $instance->config_dot_array[$key];
+
+        }else{
+
+            throw new Exception('"'. $key .'" not exist in config ');
+        }
+    }
     
 
 }
