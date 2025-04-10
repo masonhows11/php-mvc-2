@@ -1,10 +1,21 @@
 <?php
 // rewrite config
-const APP_TITLE = 'mvc project';
-// const BASE_URL = 'http://phpmvc.test';
-const BASE_URL = 'http://localhost:8000';
 
-define("BASE_DIR", realpath(__DIR__ . "/../"));
+return [
+
+    'APP_TITLE' => 'mvc project',
+
+    'BASE_URL' => 'http://localhost:8000',
+    
+    define("BASE_DIR", realpath(__DIR__ . "/../")),
+    // 'BASE_DIR' => dirname(__DIR__),
+
+
+
+];
+
+// const BASE_URL = 'http://phpmvc.test';
+
 
 
 // get current route name
@@ -14,7 +25,7 @@ $temporary_url = str_replace(BASE_URL, '', explode('?', $_SERVER['REQUEST_URI'])
 
 $temporary_url === "/" ? $temporary_url = "" : $temporary_url = substr($temporary_url, 1);
 
-define("CURRENT_ROUTE",$temporary_url);
+define("CURRENT_ROUTE", $temporary_url);
 
 
 global $routes;
