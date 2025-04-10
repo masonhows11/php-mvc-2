@@ -46,10 +46,25 @@ class Config
 
     }
 
-    private function array_dot($array, $return_array = array(). $return_key = ''): array
+    private function array_dot($array, $return_array = array(), $return_key = ''): array
     {
         // make config item with dot like
         // app.app_title or mail.SMTP.host
+        foreach ($array as $key => $value){
+
+            if(is_array($value))
+            {
+                // if we have nested array
+                // we call array_dot like recursive method
+                $return_array = array_merge($return_array,$this->array_dot($value,$return_array,$return_key.$key.'.'));
+
+            }else{
+
+                // example  ['APP_TITLE'] => 'mvc project',
+                $return_array[$return_key . $key] = $value;
+
+            }
+        }
 
         return  [];
     }
