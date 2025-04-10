@@ -1,5 +1,5 @@
 <?php
-
+// rewrite config
 const APP_TITLE = 'mvc project';
 // const BASE_URL = 'http://phpmvc.test';
 const BASE_URL = 'http://localhost:8000';
