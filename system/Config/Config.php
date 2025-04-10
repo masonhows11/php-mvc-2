@@ -66,7 +66,7 @@ class Config
             }
         }
 
-        return  [];
+        return  $return_array;
     }
 
     private function initialDefaultValues(): void
