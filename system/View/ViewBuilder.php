@@ -13,7 +13,7 @@ class ViewBuilder
 
     public $content;
 
-    public $vars = [];
+    public array $vars = [];
 
 
     /**
