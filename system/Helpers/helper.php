@@ -45,13 +45,9 @@ function old($name)
         return null;
     }
 }
-
-
 //// for flash messages
-
 function flash($name, $message = null)
 {
-
     // means show message to user
     // get message
     if (empty($message)) {
@@ -70,15 +66,10 @@ function flash($name, $message = null)
         $_SESSION['flash'][$name] = $message;
     }
 }
-
-
 function flashExists($name): bool
 {
-
     return isset($_SESSION["temporary_flash"][$name]) === true ? true : false;
 }
-
-
 
 // get all flash messages
 function allFlashes()
@@ -92,12 +83,9 @@ function allFlashes()
         return false;
     }
 }
-
 //// for errors messages
-
 function error($name, $message = null)
 {
-
     // means show message to user
     // get message
     if (empty($message)) {
@@ -116,17 +104,12 @@ function error($name, $message = null)
         $_SESSION['error'][$name] = $message;
     }
 }
-
-
 function errorExists($name): bool
 {
-
     return isset($_SESSION["temporary_error"][$name]) === true ? true : false;
 }
 
-
-
-// get all flash messages
+// get all errors messages
 function allErrors()
 {
     if (isset($_SESSION['temporary_error'])) {
@@ -137,6 +120,19 @@ function allErrors()
     } else {
         return false;
     }
+}
+
+
+function  currentDomain(): string
+{
+    $httpProtocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? "https://" : "http://";
+    $currentUrl = $_SERVER['HTTP_HOST'];
+    return $httpProtocol.$currentUrl;
+}
+
+function redirect($url)
+{
+
 }
 
 
