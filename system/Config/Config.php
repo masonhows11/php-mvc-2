@@ -20,11 +20,11 @@ class Config
      */
     private function __construct()
     {
-        $this->initialConfigArray();
+        $this->initialConfigArrays();
     }
 
 
-    private function initialConfigArray(): void
+    private function initialConfigArrays(): void
     {
 
          // dirname -> Returns a parent directory's path
