@@ -2,16 +2,34 @@
 
 ob_start();
 session_start();
+
+if (isset($_SESSION['old'])) {
+    unset($_SESSION['temporary_old']);
+}
+
+if (isset($_SESSION['old']))
+{
+    $_SESSION['temporary_old'] = $_SESSION['old'];
+    unset($_SESSION['old']);
+}
+
+$params = [];
+
+$params = !isset($_GET) ? $params : array_merge($params,$_GET);
+$params = !isset($_POST) ? $params : array_merge($params,$_POST);
+$_SESSION['old'] = $params;
+unset($params);
+
 // add helper
-require_once ("../system/Helpers/helper.php");
+require_once("../system/Helpers/helper.php");
 
 // when app initialized below code must be executed
 // and place on memory
 require_once("../config/app.php");
 require_once("../config/database.php");
 
-require_once ("../routes/web.php");
-require_once ("../routes/api.php");
+require_once("../routes/web.php");
+require_once("../routes/api.php");
 
 
 // run routing sys
