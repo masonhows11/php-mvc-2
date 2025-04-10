@@ -24,9 +24,39 @@ class Config
     }
 
 
-    private function initialConfigArray(){
+    private function initialConfigArray(): void
+    {
+
+         // dirname -> Returns a parent directory's path
+        $configPath = dirname(dirname(__DIR__)).'/config';
+        // read all config php files from config dir as array
+        foreach (glob($configPath.'*.php') as $filename)
+        {
+            // get file content and put into $config var
+            $config = require $filename;
+            $key = $filename;
+            $key = str_replace($configPath,"",$key);
+            $key = str_replace('.php',"",$key);
+
+            $this->config_nested_array[$key] = $config;
+        }
+
+        $this->initialDefaultValues();
+        $this->config_dot_array = $this->array_dot($this->config_nested_array);
 
     }
+
+    private function array_dot(): array
+    {
+
+        return  [];
+    }
+
+    private function initialDefaultValues()
+    {
+
+    }
+
 
 
 
