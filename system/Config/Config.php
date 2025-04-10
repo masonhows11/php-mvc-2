@@ -46,18 +46,21 @@ class Config
 
     }
 
-    private function array_dot(): array
+    private function array_dot($array, $return_array = array(). $return_key = ''): array
     {
+        // make config item with dot like
+        // app.app_title or mail.SMTP.host
 
         return  [];
     }
 
-    private function initialDefaultValues()
+    private function initialDefaultValues(): void
     {
 
         $temporary = str_replace($this->config_dot_array['app']['BASE_URL'],'',explode('?',$_SERVER['REQUEST_URI'][0]));
         $temporary === "/" ? $temporary = "" : $temporary = substr($temporary,1);
-
+        // make current_route & add into app file in array
+        $this->config_nested_array['app']['CURRENT_ROUTE'] = $temporary;
     }
 
 
