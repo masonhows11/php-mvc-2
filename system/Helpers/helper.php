@@ -45,3 +45,26 @@ function old($name)
         return null;
     }
 }
+
+
+function flash($name, $message = null)
+{
+
+    // means show message to user
+    // get message
+    if (empty($message)) {
+
+        if (isset($_SESSION['temporary_flash'][$name])) {
+            $temporary = $_SESSION['temporary_flash'][$name];
+            unset($_SESSION['temporary_flash'][$name]);
+            // show message
+            return $temporary;
+        } else {
+            return false;
+        }
+    } else {
+        // set new message
+        // example session name -> flash -> key : name -> value -> message
+        $_SESSION['flash'][$name] = $message;
+    }
+}
