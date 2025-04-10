@@ -1,22 +1,14 @@
 <?php
-
-function dd($var)
-{
-    echo "<pre/>";
-    print_r($var);
-    exit();
-
-}
-
-
+// add helper
+require_once ("../system/Helpers/helper.php");
 
 // when app initialized below code must be executed
 // and place on memory
-require_once('../config/app.php');
-require_once('../config/database.php');
+require_once("../config/app.php");
+require_once("../config/database.php");
 
-require_once ('../routes/web.php');
-require_once ('../routes/api.php');
+require_once ("../routes/web.php");
+require_once ("../routes/api.php");
 
 
 // run routing sys

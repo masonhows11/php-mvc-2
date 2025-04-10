@@ -1,5 +1,7 @@
 <?php
 
+use JetBrains\PhpStorm\NoReturn;
+
 
 /**
  * @throws Exception
@@ -15,11 +17,31 @@ function view($dir, $vars = []): void
     $content = $viewBuilder->content;
 
     // data variables with composer
-    empty($viewVars) ? : extract($viewVars);
+    empty($viewVars) ?: extract($viewVars);
     // data variables with view method
-    empty($vars) ? : extract($vars);
+    empty($vars) ?: extract($vars);
 
     // to run php code in html
-    eval(" ?>".html_entity_decode($content));
+    eval(" ?>" . html_entity_decode($content));
+
+}
+
+function dd($value, $die = true): void
+{
+    var_dump($value);
+    if ($die) {
+        exit();
+    }
+}
+
+function html($text): string
+{
+    return html_entity_decode($text);
+}
+
+function old($name)
+{
+
+    
 
 }
