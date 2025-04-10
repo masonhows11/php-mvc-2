@@ -13,6 +13,8 @@ class ViewBuilder
 
     public $content;
 
+    public $vars = [];
+
 
     /**
      * @throws Exception
@@ -30,6 +32,8 @@ class ViewBuilder
         Composer::setViews($this->viewNameArray);
 
         $appServiceProvider = new AppServiceProvider();
+        $appServiceProvider->boot();
+        $this->vars = Composer::getVars();
         
     }
 
