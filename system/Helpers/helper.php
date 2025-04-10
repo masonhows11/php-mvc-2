@@ -47,6 +47,8 @@ function old($name)
 }
 
 
+//// for flash messages
+
 function flash($name, $message = null)
 {
 
@@ -68,3 +70,73 @@ function flash($name, $message = null)
         $_SESSION['flash'][$name] = $message;
     }
 }
+
+
+function flashExists($name): bool
+{
+
+    return isset($_SESSION["temporary_flash"][$name]) === true ? true : false;
+}
+
+
+
+// get all flash messages
+function allFlashes()
+{
+    if (isset($_SESSION['temporary_flash'])) {
+        $temporary = $_SESSION['temporary_flash'];
+        unset($_SESSION['temporary_flash']);
+        // return/show message
+        return $temporary;
+    } else {
+        return false;
+    }
+}
+
+//// for errors messages
+
+function error($name, $message = null)
+{
+
+    // means show message to user
+    // get message
+    if (empty($message)) {
+
+        if (isset($_SESSION['temporary_error'][$name])) {
+            $temporary = $_SESSION['temporary_error'][$name];
+            unset($_SESSION['temporary_error'][$name]);
+            // show message
+            return $temporary;
+        } else {
+            return false;
+        }
+    } else {
+        // set new message
+        // example session name -> flash -> key : name -> value -> message
+        $_SESSION['error'][$name] = $message;
+    }
+}
+
+
+function errorExists($name): bool
+{
+
+    return isset($_SESSION["temporary_error"][$name]) === true ? true : false;
+}
+
+
+
+// get all flash messages
+function allErrors()
+{
+    if (isset($_SESSION['temporary_error'])) {
+        $temporary = $_SESSION['temporary_error'];
+        unset($_SESSION['temporary_error']);
+        // return/show message
+        return $temporary;
+    } else {
+        return false;
+    }
+}
+
+
