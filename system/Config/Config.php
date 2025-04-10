@@ -13,6 +13,19 @@ class Config
 
 
 
+    /**
+     * Class constructor.
+     */
+    private function __construct()
+    {
+        $this->initialConfigArray();
+    }
+
+
+    private function initialConfigArray(){
+
+    }
+
 
     
 
