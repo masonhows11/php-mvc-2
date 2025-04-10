@@ -1,6 +1,7 @@
 <?php
 
 
+
 /**
  * @throws Exception
  */
@@ -130,9 +131,27 @@ function  currentDomain(): string
     return $httpProtocol.$currentUrl;
 }
 
-function redirect($url)
+function redirect($url) : void
 {
+    $url = trim($url,'/ ');
+    $url = strpos($url,currentDomain()) === 0 ? $url : currentDomain().'/'.$url;
+    header("Location: ".$url);
+    exit(); // its important
+}
 
+function back(): void
+{
+    $http_refer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : null;
+    redirect($http_refer);
+}
+
+function asset($src): string
+{
+    return currentDomain().("/".trim($src,"/ "));
 }
 
 
+function url($src): string
+{
+    return currentDomain().("/".trim($src,"/ "));
+}
