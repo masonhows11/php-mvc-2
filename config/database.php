@@ -1,7 +1,12 @@
 <?php
 
+return [
 
-const DBHOST = 'localhost';
-const DBNAME = 'php_mvc';
-const DBUSERNAME = 'root';
-const DBPASSWORD = '1289..//';
+    'DBHOST' => 'localhost',
+
+    'DBNAME' => 'php_mvc',
+
+    'DBUSERNAME' => 'root',
+
+    'DBPASSWORD' => '1289..//'
+];
