@@ -173,10 +173,10 @@ function findRouteByName($name)
             break;
         }
     }
-
+    return $route;
 }
 
-function route($route)
+function route($name,$params = [])
 {
 
 
