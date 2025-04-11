@@ -23,8 +23,6 @@ return [
 
 // const BASE_URL = 'http://phpmvc.test';
 
-
-
 // get current route name
 // $raw_uri = explode('?', $_SERVER['REQUEST_URI'][0]);
 
