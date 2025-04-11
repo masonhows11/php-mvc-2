@@ -57,7 +57,7 @@ trait ExtendContent
     }
 
 
-    private function initialYields($yieldsName)
+    private function initialYields($yieldsName): array|string
     {
         $string = $this->content;
         $startWord = "@section('" . $yieldsName . "')";

@@ -179,15 +179,15 @@ function findRouteByName($name)
 /**
  * @throws Exception
  */
-function route($name, $params = [])
+function route($name, $params = []): string
 {
-    if(!is_array($params)){
+    if (!is_array($params)) {
         throw new Exception("route params must be array");
     }
 
     $route = findRouteByName($name);
 
-    if($route == null){
+    if ($route == null) {
         throw new Exception("route not found!");
     }
 
@@ -198,15 +198,66 @@ function route($name, $params = [])
     // example edit/{id}
     $routesParamsMatch = [];
     // put all match into $routesParamsMatch array
-    preg_match_all("/{[^}.]*/",$route,$routesParamsMatch);
-    if( count($routesParamsMatch[0]) > count($params) )
-    {
+    preg_match_all("/{[^}.]*/", $route, $routesParamsMatch);
+    if (count($routesParamsMatch[0]) > count($params)) {
         throw new Exception("route params not enough!");
     }
 
-    foreach ($routesParamsMatch[0] as $key => $routeMatch){
+    foreach ($routesParamsMatch[0] as $key => $routeMatch) {
 
-            $route = str_replace($routeMatch,array_pop($params),$route);
+        $route = str_replace($routeMatch, array_pop($params), $route);
     }
-    return currentDomain()."/".trim($route," /");
+    return currentDomain() . "/" . trim($route, " /");
 }
+
+function generateToken(): string
+{
+    return bin2hex(openssl_random_pseudo_bytes(32));
+}
+
+function methodField(): string
+{
+    $method_field = strtolower($_SERVER['REQUEST_METHOD']);
+    if ($method_field == 'post') {
+
+        if (isset($_POST['_method'])) {
+
+            if ($_POST['_method'] == 'put') {
+
+                $method_field = 'put';
+
+            } elseif ($_POST['_method'] == 'delete') {
+
+                $method_field = 'delete';
+            }
+        }
+
+    }
+    return $method_field;
+}
+
+function array_dot($array, $return_array = array(), $return_key = ''): array
+{
+    // make config item with dot like
+    // app.app_title or mail.SMTP.host
+    foreach ($array as $key => $value){
+        if(is_array($value))
+        {
+            // if we have nested array
+            // we call array_dot like recursive method
+            $return_array = array_merge($return_array,array_dot($value,$return_array,$return_key.$key.'.'));
+        }else{
+            // example  ['APP_TITLE'] => 'mvc project',
+            $return_array[$return_key . $key] = $value;
+        }
+    }
+    return  $return_array;
+}
+
+
+function currentUrl(): string
+{
+  return currentDomain().$_SERVER['REQUEST_URI'];
+}
+
+
