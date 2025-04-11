@@ -9,7 +9,7 @@ new \System\Application\Application();
 // when app initialized below code must be executed
 // and place on memory
 // require_once("../config/app.php");
-// require_once("../config/database.php");
+require_once("../config/database.php");
 
 
 
