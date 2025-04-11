@@ -40,5 +40,11 @@ class SessionProvider extends Provider
             $_SESSION['temporary_error'] = $_SESSION['error'];
             unset($_SESSION['error']);
         }
+
+        $params = [];
+        $params = !isset($_GET) ? $params : array_merge($params,$_GET);
+        $params = !isset($_POST) ? $params : array_merge($params,$_POST);
+        $_SESSION['old'] = $params;
+        unset($params);
     }
 }

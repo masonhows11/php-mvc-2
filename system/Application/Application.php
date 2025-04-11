@@ -41,13 +41,25 @@ class Application{
         }
     }
 
-    private function registerRoutes()
+    private function registerRoutes(): void
     {
+        global $routes;
+        $routes = [
+            'get' => [],
+            'post' => [],
+            'put' => [],
+            'delete' => [],
+        ];
+
+        require_once(dirname(dirname(__DIR__)).'/routes/web.php');
+        require_once(dirname(dirname(__DIR__)).'/routes/api.php');
     }
 
-    private function routing()
+    private function routing(): void
     {
-
+        // run routing sys
+        $routing = new \System\Router\Routing();
+        $routing->run();
     }
 
 
