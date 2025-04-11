@@ -33,7 +33,7 @@ class ViewBuilder
 
         //        $appServiceProvider = new AppServiceProvider();
         //        $appServiceProvider->boot();
-        
+
         $this->vars = Composer::getVars();
         
     }

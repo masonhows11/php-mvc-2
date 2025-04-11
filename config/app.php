@@ -8,7 +8,7 @@ return [
     'BASE_URL' => 'http://localhost:8000',
 
     define("BASE_DIR", realpath(__DIR__ . "/../")),
-    // 'BASE_DIR' => dirname(__DIR__),
+
 
     // providers
     // register providers
@@ -21,6 +21,7 @@ return [
 
 ];
 
+// 'BASE_DIR' => dirname(__DIR__),
 // const BASE_URL = 'http://phpmvc.test';
 
 // get current route name

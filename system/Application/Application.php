@@ -1,12 +1,8 @@
 <?php
 
-
 namespace System\Application;
 
-
 class Application{
-
-
 
     public function __construct()
     {
@@ -26,7 +22,6 @@ class Application{
 
             $providerObj = new $provider();
             $providerObj->boot();
-
         }
     }
 
@@ -36,7 +31,6 @@ class Application{
         require_once(dirname(__DIR__).'/Helpers/helper.php');
         // to add & load custom helper do this
         if(file_exists(dirname(dirname(__DIR__)).'/app/Http/Helpers.php')){
-
             require_once(dirname(dirname(__DIR__)).'/app/Http/Helpers.php');
         }
     }
@@ -50,7 +44,6 @@ class Application{
             'put' => [],
             'delete' => [],
         ];
-
         require_once(dirname(dirname(__DIR__)).'/routes/web.php');
         require_once(dirname(dirname(__DIR__)).'/routes/api.php');
     }
@@ -61,6 +54,5 @@ class Application{
         $routing = new \System\Router\Routing();
         $routing->run();
     }
-
 
 }
