@@ -53,6 +53,14 @@ require_once("../system/Helpers/helper.php");
 require_once("../config/app.php");
 require_once("../config/database.php");
 
+global $routes;
+$routes = [
+    'get' => [],
+    'post' => [],
+    'put' => [],
+    'delete' => [],
+];
+
 require_once("../routes/web.php");
 require_once("../routes/api.php");
 

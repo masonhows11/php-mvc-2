@@ -1,7 +1,6 @@
 <?php
 
 
-
 /**
  * @throws Exception
  */
@@ -46,6 +45,7 @@ function old($name)
         return null;
     }
 }
+
 //// for flash messages
 function flash($name, $message = null)
 {
@@ -67,6 +67,7 @@ function flash($name, $message = null)
         $_SESSION['flash'][$name] = $message;
     }
 }
+
 function flashExists($name): bool
 {
     return isset($_SESSION["temporary_flash"][$name]) === true ? true : false;
@@ -84,6 +85,7 @@ function allFlashes()
         return false;
     }
 }
+
 //// for errors messages
 function error($name, $message = null)
 {
@@ -105,6 +107,7 @@ function error($name, $message = null)
         $_SESSION['error'][$name] = $message;
     }
 }
+
 function errorExists($name): bool
 {
     return isset($_SESSION["temporary_error"][$name]) === true ? true : false;
@@ -124,18 +127,18 @@ function allErrors()
 }
 
 
-function  currentDomain(): string
+function currentDomain(): string
 {
-    $httpProtocol = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on' ) ? "https://" : "http://";
+    $httpProtocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? "https://" : "http://";
     $currentUrl = $_SERVER['HTTP_HOST'];
-    return $httpProtocol.$currentUrl;
+    return $httpProtocol . $currentUrl;
 }
 
-function redirect($url) : void
+function redirect($url): void
 {
-    $url = trim($url,'/ ');
-    $url = strpos($url,currentDomain()) === 0 ? $url : currentDomain().'/'.$url;
-    header("Location: ".$url);
+    $url = trim($url, '/ ');
+    $url = strpos($url, currentDomain()) === 0 ? $url : currentDomain() . '/' . $url;
+    header("Location: " . $url);
     exit(); // its important
 }
 
@@ -147,11 +150,34 @@ function back(): void
 
 function asset($src): string
 {
-    return currentDomain().("/".trim($src,"/ "));
+    return currentDomain() . ("/" . trim($src, "/ "));
 }
 
 
 function url($src): string
 {
-    return currentDomain().("/".trim($src,"/ "));
+    return currentDomain() . ("/" . trim($src, "/ "));
+}
+
+
+function findRouteByName($name)
+{
+
+    global $routes;
+
+    $allRoutes = array_merge($routes['get'], $routes['post'], $routes['put'], $routes['delete']);
+    $route = '';
+    foreach ($allRoutes as $item) {
+        if ($route['name'] == $name && $item['name'] !== null) {
+            $route = $item['url'];
+            break;
+        }
+    }
+
+}
+
+function route($route)
+{
+
+
 }
