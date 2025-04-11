@@ -2,7 +2,7 @@
 
 namespace System\View;
 
-use App\Providers\AppServiceProvider;
+// use App\Providers\AppServiceProvider;
 use Exception;
 use System\View\Traits\ViewLoader;
 use System\View\Traits\ExtendContent;
