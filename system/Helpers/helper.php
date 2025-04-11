@@ -197,5 +197,16 @@ function route($name, $params = [])
     // params name in route
     // example edit/{id}
     $routesParamsMatch = [];
+    // put all match into $routesParamsMatch array
     preg_match_all("/{[^}.]*/",$route,$routesParamsMatch);
+    if( count($routesParamsMatch[0]) > count($params) )
+    {
+        throw new Exception("route params not enough!");
+    }
+
+    foreach ($routesParamsMatch[0] as $key => $routeMatch){
+
+            $route = str_replace($routeMatch,array_pop($params),$route);
+    }
+    return currentDomain()."/".trim($route," /");
 }
