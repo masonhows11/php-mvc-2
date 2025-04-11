@@ -10,6 +10,13 @@ return [
     define("BASE_DIR", realpath(__DIR__ . "/../")),
     // 'BASE_DIR' => dirname(__DIR__),
 
+    // providers
+    // register providers
+    'providers' => [
+        \App\Providers\SessionProvider::class,
+        \App\Providers\AppServiceProvider::class,
+    ],
+
 
 
 ];

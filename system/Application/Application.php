@@ -1,7 +1,7 @@
 <?php
 
 
-namespace System\Aplication;
+namespace System\Application;
 
 
 class Application{
