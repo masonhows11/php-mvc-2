@@ -7,7 +7,7 @@ $_SESSION['old'] = $params;
 unset($params);
 
 // add helper
-require_once("../system/Helpers/helper.php");
+// require_once("../system/Helpers/helper.php");
 
 // when app initialized below code must be executed
 // and place on memory
