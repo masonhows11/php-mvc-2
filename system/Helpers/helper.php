@@ -176,8 +176,26 @@ function findRouteByName($name)
     return $route;
 }
 
-function route($name,$params = [])
+/**
+ * @throws Exception
+ */
+function route($name, $params = [])
 {
+    if(!is_array($params)){
+        throw new Exception("route params must be array");
+    }
 
+    $route = findRouteByName($name);
 
+    if($route == null){
+        throw new Exception("route not found!");
+    }
+
+    // params from request
+    // edit/25
+    $params = array_reverse($params);
+    // params name in route
+    // example edit/{id}
+    $routesParamsMatch = [];
+    preg_match_all("/{[^}.]*/",$route,$routesParamsMatch);
 }
